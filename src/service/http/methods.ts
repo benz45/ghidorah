@@ -1,7 +1,7 @@
 import useSWR from 'swr'
 import useSWRMutation from 'swr/mutation'
-import { ApiGetPath, ApiGetResponse, ApiPostPath, ApiPostRequest, ApiPostResponse } from '../api/api'
-import axios from '../http'
+import { ApiGetPath, ApiGetResponse, ApiPostPath, ApiPostRequest, ApiPostResponse } from '@/service/api/api'
+import axios from '@/service/http/index'
 export function usePostMethod<T extends keyof ApiPostPath>(url: T) {
   const { data, trigger, isMutating, error } = useSWRMutation(url as string, async (key, options: {arg: ApiPostRequest<typeof url>}) => {
     const response = await axios.post<ApiPostResponse<typeof url>>(key, options.arg)

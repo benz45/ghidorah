@@ -1,4 +1,4 @@
-import { BaseType, BaseTypeIdOnly } from "../baseType";
+import { BaseType, BaseTypeIdOnly } from "@/model/baseType";
 
 export interface CreateProductRequest {
   amount:        number;

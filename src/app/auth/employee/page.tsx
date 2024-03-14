@@ -3,7 +3,7 @@ import { Box, Container, CssBaseline } from '@mui/material'
 import Image from 'next/image'
 import React from 'react'
 
-export default function AuthPage({ children }: { children: React.ReactNode }) {
+export default function AuthEmployeePage({ children }: { children: React.ReactNode }) {
   return (
     <React.Fragment>
       <CssBaseline />

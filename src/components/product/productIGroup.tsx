@@ -1,5 +1,6 @@
-import HorizontalCard from "./horizontalCard";
-import VerticalCard from "./verticalCard";
+import HorizontalCard from '@/components/product/horizontalCard'
+import VerticalCard from '@/components/product/verticalCard'
+
 export default function ProductIGroup() {
   return (
     <>
@@ -39,5 +40,5 @@ export default function ProductIGroup() {
         image="https://i.ibb.co/xmJdGXD/kisspng-slip-dress-clothing-casual-fashion-model-5abb4a319d2986-8864671115222236656438.png"
       />
     </>
-  );
+  )
 }

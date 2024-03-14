@@ -1,5 +1,5 @@
-import React from "react";
+import React from 'react'
 
-export default function Home() {
-  return <div className="text-red-500">About</div>;
+export default function AboutPage() {
+  return <div className="text-red-500">About</div>
 }

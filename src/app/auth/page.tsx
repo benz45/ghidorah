@@ -2,7 +2,7 @@
 import { Box, Container, CssBaseline, Divider } from '@mui/material'
 import Image from 'next/image'
 import React from 'react'
-import useRoute from '~/hook/router'
+import useRoute from '@/hook/router'
 
 export default function AuthPage() {
   const route = useRoute()

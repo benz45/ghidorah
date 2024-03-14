@@ -1,6 +1,6 @@
+import { StorePageParams } from '@/hook/routeParams'
+import { convertStringToShouldType } from '@/util/util'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { StorePageParams } from './routeParams'
-import { convertStringToShouldType } from '../util/util'
 
 export const PATHS = {
   MAIN: {path:'/', params: {}},

@@ -6,16 +6,16 @@ import FormControl from '@mui/material/FormControl'
 import { useState } from 'react'
 import { SubmitHandler, useForm, useWatch } from 'react-hook-form'
 import * as yup from 'yup'
-import CustomSelect from '~/components/util/customSelect'
-import CustomTextField from '~/components/util/customTextField'
-import TextHover from '~/components/util/textHover'
-import * as DateConstant from '~/constant/dateConstant'
-import { RoleTypeConstant } from '~/constant/roleTypeConstant'
-import { UserTypeConstant } from '~/constant/userTypeConstant'
-import useRoute from '~/hook/router'
-import { SignupRequest } from '~/model/auth/signupRequest'
-import { useServiceAuth } from '~/service/reno/useServiceAuth'
-import AuthPage from '../page'
+import CustomSelect from '@/components/util/customSelect'
+import CustomTextField from '@/components/util/customTextField'
+import TextHover from '@/components/util/textHover'
+import * as DateConstant from '@/constant/dateConstant'
+import { RoleTypeConstant } from '@/constant/roleTypeConstant'
+import { UserTypeConstant } from '@/constant/userTypeConstant'
+import useRoute from '@/hook/router'
+import { SignupRequest } from '@/model/auth/signupRequest'
+import { useServiceAuth } from '@/service/reno/useServiceAuth'
+import AuthCustomerPage from '@/app/auth/customer/page'
 
 const schema = yup.object({
   name: yup.string().min(3).max(50).required('Name is required'),
@@ -42,7 +42,7 @@ export interface SearchParamsSignup {
   isSignupSuccess?: boolean
 }
 
-export default function SignupPage() {
+export default function AuthCustomerSignupPage() {
   const { signup } = useServiceAuth()
 
   const route = useRoute<SearchParamsSignup>()
@@ -297,7 +297,7 @@ export default function SignupPage() {
   }
 
   return (
-    <AuthPage>
+    <AuthCustomerPage>
       <Container className="flex flex-col items-center justify-center w-2/4 p-14">
         <div className="flex flex-col w-full">
           <div className="font-bold text-4xl text-primary pb-4">Get Started Customer </div>
@@ -361,6 +361,6 @@ export default function SignupPage() {
           </Box>
         </FormControl>
       </Container>
-    </AuthPage>
+    </AuthCustomerPage>
   )
 }

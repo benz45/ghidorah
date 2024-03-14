@@ -1,10 +1,10 @@
 import React from 'react'
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter'
 import type { Metadata } from 'next'
-import { montserrat, sansita_swashed } from './font'
-import './globals.css'
-import { Theme } from './theme'
-import CsrfComponent from '~/components/csrfComponent'
+import { montserrat, sansita_swashed } from '@/app/font'
+import '@/app/globals.css'
+import { Theme } from '@/app/theme'
+import CsrfComponent from '@/components/csrfComponent'
 
 export const metadata: Metadata = {
   title: 'Brugge',

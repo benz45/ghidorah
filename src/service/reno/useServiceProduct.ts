@@ -1,5 +1,5 @@
 import React from 'react'
-import { useGetTriggerMethod } from '../http/methods'
+import { useGetTriggerMethod } from '@/service/http/methods'
 
 export function useServiceProduct() {
 

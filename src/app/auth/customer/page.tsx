@@ -2,9 +2,8 @@
 import { Box, Container, CssBaseline } from '@mui/material'
 import Image from 'next/image'
 import React from 'react'
-import * as yup from 'yup'
 
-export default function AuthPage({ children }: { children: React.ReactNode }) {
+export default function AuthCustomerPage({ children }: { children: React.ReactNode }) {
   return (
     <React.Fragment>
       <CssBaseline />

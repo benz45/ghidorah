@@ -6,9 +6,9 @@ import FormControl from '@mui/material/FormControl'
 import { useState } from 'react'
 import { SubmitHandler, useForm, useWatch } from 'react-hook-form'
 import * as yup from 'yup'
-import CustomTextField from '~/components/util/customTextField'
-import useRoute from '~/hook/router'
-import { useServiceCustomer } from '~/service/reno/useServiceCustomer'
+import CustomTextField from '@/components/util/customTextField'
+import useRoute from '@/hook/router'
+import { useServiceCustomer } from '@/service/reno/useServiceCustomer'
 
 const schema = yup.object({
   name: yup.string().min(3).max(50).required('Name is required'),

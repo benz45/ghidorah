@@ -1,5 +1,4 @@
 'use client'
-import { green, red } from '@mui/material/colors'
 import { createTheme } from '@mui/material/styles'
 import { ThemeProvider } from '@mui/system'
 import * as React from 'react'

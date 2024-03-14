@@ -1,6 +1,6 @@
 import AddIcon from '@mui/icons-material/Add'
 import StorefrontIcon from '@mui/icons-material/Storefront'
-import CustomizedMenus from '~/components/util/customMeno'
+import CustomizedMenus from '@/components/util/customMeno'
 
 export default function OptionSelectStore() {
   return (

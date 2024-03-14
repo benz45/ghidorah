@@ -3,14 +3,14 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import { Box, Grid } from '@mui/material'
 import FormControl from '@mui/material/FormControl'
-import { ChangeEvent, useState } from 'react'
+import React, { ChangeEvent, useState } from 'react'
 import { SubmitHandler, useForm, useWatch } from 'react-hook-form'
 import * as yup from 'yup'
-import CustomizedButtons from '~/components/util/customButton'
-import CustomTextField from '~/components/util/customTextField'
-import InputImageUpload from '~/components/util/uploadImage'
-import useRoute from '~/hook/router'
-import { useServiceStore } from '../../../service/reno/useServiceStore'
+import CustomButton from '@/components/util/customButton'
+import CustomTextField from '@/components/util/customTextField'
+import InputImageUpload from '@/components/util/inputImageUpload'
+import useRoute from '@/hook/router'
+import { useServiceStore } from '@/service/reno/useServiceStore'
 
 const schema = yup.object({
   storeName: yup.string().min(3).max(50).required('Name is required'),
@@ -214,7 +214,7 @@ export default function ContentCreateStore(props: ContentCreateStoreProps) {
               </Grid>
               <Grid item xs={12}>
                 <div className="flex w-full justify-end">
-                  <CustomizedButtons text="Next" />
+                  <CustomButton text="Next" />
                 </div>
               </Grid>
             </>
@@ -241,8 +241,8 @@ export default function ContentCreateStore(props: ContentCreateStoreProps) {
               </Grid>
               <Grid item xs={12}>
                 <div className="flex w-full justify-between">
-                  <CustomizedButtons text="Previous" variant="sorf" onClick={() => props.onPrevious()} />
-                  <CustomizedButtons type="submit" text="Confirm" />
+                  <CustomButton text="Previous" variant="sorf" onClick={() => props.onPrevious()} />
+                  <CustomButton type="submit" text="Confirm" />
                 </div>
               </Grid>
             </>

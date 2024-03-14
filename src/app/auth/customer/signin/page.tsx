@@ -1,4 +1,10 @@
 'use client'
+import AuthCustomerPage from '@/app/auth/customer/page'
+import { SearchParamsSignup } from '@/app/auth/customer/signup/page'
+import CustomTextField from '@/components/util/customTextField'
+import TextHover from '@/components/util/textHover'
+import useRoute from '@/hook/router'
+import { useServiceAuth } from '@/service/reno/useServiceAuth'
 import { yupResolver } from '@hookform/resolvers/yup'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import ErrorIcon from '@mui/icons-material/Error'
@@ -9,13 +15,6 @@ import { AxiosError } from 'axios'
 import React, { useState } from 'react'
 import { SubmitHandler, useForm, useWatch } from 'react-hook-form'
 import * as yup from 'yup'
-import { CSRFContext } from '~/components/csrfComponent'
-import CustomTextField from '~/components/util/customTextField'
-import TextHover from '~/components/util/textHover'
-import useRoute from '~/hook/router'
-import { useServiceAuth } from '~/service/reno/useServiceAuth'
-import AuthPage from '../page'
-import { SearchParamsSignup } from '../signup/page'
 
 const schema = yup.object({
   username: yup.string().required('Username is required'),
@@ -24,8 +23,7 @@ const schema = yup.object({
 
 type SignInSchema = yup.InferType<typeof schema>
 
-function SigninPage() {
-  const context = React.useContext(CSRFContext)
+function AuthCustomerSigninPage() {
   const [isLoading, setIsLoading] = React.useState(false)
   const { signin } = useServiceAuth()
   const route = useRoute<SearchParamsSignup>()
@@ -127,7 +125,7 @@ function SigninPage() {
   }
 
   return (
-    <AuthPage>
+    <AuthCustomerPage>
       <Container className="flex flex-col items-center justify-center w-full h-screen">
         <div className="flex flex-col h-full justify-center">
           <div className="flex flex-col w-full">
@@ -155,8 +153,8 @@ function SigninPage() {
           </FormControl>
         </div>
       </Container>
-    </AuthPage>
+    </AuthCustomerPage>
   )
 }
 
-export default SigninPage
+export default AuthCustomerSigninPage

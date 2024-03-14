@@ -1,4 +1,4 @@
-import { BaseType } from "../baseType";
+import { BaseType } from "@/model/baseType";
 
 export interface CreateEmployeeResponse {
   authUserId?:       string;

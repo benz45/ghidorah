@@ -1,9 +1,9 @@
 import React, { useContext } from 'react'
-import { RouteParamHomePage } from '~/components/home/homePage'
-import { TabSelectPagesControlContext, TabSelectPagesControlProps } from '~/components/home/tabSelectPagesControl'
-import useRoute from '~/hook/router'
-import { Each } from '~/util/util'
-import OptionSelectStore from './optionSelectStore'
+import { RouteParamHomePage } from '@/components/home/homePage'
+import { TabSelectPagesControlContext, TabSelectPagesControlProps } from '@/components/home/tabSelectPagesControl'
+import useRoute from '@/hook/router'
+import { Each } from '@/util/util'
+import OptionSelectStore from '@/components/store/header/optionSelectStore'
 
 export default function TabHeaderSelectPages() {
   const route = useRoute<RouteParamHomePage>()

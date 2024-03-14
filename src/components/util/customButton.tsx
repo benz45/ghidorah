@@ -1,6 +1,7 @@
 import Stack from '@mui/material/Stack'
+import React from 'react'
 
-export default function CustomizedButtons(props: {
+export default function CustomButton(props: {
   text: string
   type?: 'button' | 'reset' | 'submit'
   variant?: 'sorf' | 'contained'

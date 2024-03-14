@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { SigninResponse } from '~/model/auth/signinResponse'
-import axios from '~/service/http'
+import { SigninResponse } from '@/model/auth/signinResponse'
+import axios from '@/service/http'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<SigninResponse | { message: string }>) {
   res.setHeader('Cache-Control', 'no-store')

@@ -1,7 +1,7 @@
 import { Menu, Transition } from '@headlessui/react'
 import { useRouter } from 'next/navigation'
 import { Fragment, useState } from 'react'
-import ArrowIcon from '../icons/arrow'
+import ArrowIcon from '@/components/icons/arrow'
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ')

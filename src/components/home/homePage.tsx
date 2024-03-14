@@ -10,15 +10,15 @@ import SearchIcon from '@mui/icons-material/Search'
 import StorefrontIcon from '@mui/icons-material/Storefront'
 import { TabContext, TabList, TabPanel } from '@mui/lab'
 import { Box, Grid, Tab } from '@mui/material'
-import { useServiceProduct, useWatcherService } from '~/service/reno/useServiceProduct'
-import CreateProductModal, { CreateProductModalContext } from './createProductModal'
-import CustomizedMenus from '~/components/util/customMeno'
-import useRoute from '~/hook/router'
+import { useServiceProduct, useWatcherService } from '@/service/reno/useServiceProduct'
+import CustomizedMenus from '@/components/util/customMeno'
+import useRoute from '@/hook/router'
+import { Each } from '@/util/util'
+import CreateProductModal, { CreateProductModalContext } from '@/components/home/createProductModal'
 import TabSelectPagesControl, {
   TabSelectPagesControlContext,
   TabSelectPagesControlProps
-} from './tabSelectPagesControl'
-import { Each } from '~/util/util'
+} from '@/components/home/tabSelectPagesControl'
 
 export interface RouteParamHomePage {
   TabSelectinitialIndex?: number

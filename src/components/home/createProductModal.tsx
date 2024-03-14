@@ -1,6 +1,6 @@
+import FormCreateProductModel from '@/components/home/formCreateProductModal'
 import { Dialog, Transition } from '@headlessui/react'
 import React, { Fragment, useRef, useState } from 'react'
-import FormCreateProductModel from './formCreateProductModal'
 
 interface CreateProductModalContext {
   setShowModel?: (isShow: boolean) => void

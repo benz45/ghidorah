@@ -1,6 +1,7 @@
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate'
 import Button from '@mui/material/Button'
 import { styled } from '@mui/material/styles'
+import React from 'react'
 const VisuallyHiddenInput = styled('input')({
   clip: 'rect(0 0 0 0)',
   clipPath: 'inset(50%)',

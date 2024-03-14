@@ -1,6 +1,6 @@
 import { AxiosError } from "axios"
-import axios from "../http"
-import { ApiGetPath, ApiGetResponse } from "./api"
+import axios from "@/service/http"
+import { ApiGetPath, ApiGetResponse } from "@/service/api/api"
 
 
 async function _get<T extends keyof ApiGetPath>(url: T): Promise<ApiGetResponse<T> | undefined> {

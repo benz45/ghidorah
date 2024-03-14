@@ -1,11 +1,11 @@
+import { Each } from '@/util/util'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import { Divider } from '@mui/material'
 import Button, { ButtonOwnProps, ButtonPropsVariantOverrides } from '@mui/material/Button'
 import Menu, { MenuProps } from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import { alpha, styled } from '@mui/material/styles'
-import * as React from 'react'
-import { Each } from '~/util/util'
+import React from 'react'
 
 const StyledMenu = styled((props: MenuProps) => (
   <Menu

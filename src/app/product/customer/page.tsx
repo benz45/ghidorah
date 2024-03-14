@@ -1,13 +1,13 @@
 'use client'
 import Image from 'next/image'
-import CategoryItem from '~/components/categoryItem'
-import CartIcon from '~/components/icons/cart'
-import SearchIcon from '~/components/icons/search'
-import SortIcon from '~/components/icons/sortIcon'
-import MenuHomePage from '~/components/product/menuHomePage'
-import ProductIGroup from '~/components/product/productIGroup'
+import CategoryItem from '@/components/categoryItem'
+import CartIcon from '@/components/icons/cart'
+import SearchIcon from '@/components/icons/search'
+import SortIcon from '@/components/icons/sortIcon'
+import MenuHomePage from '@/components/product/menuHomePage'
+import ProductIGroup from '@/components/product/productIGroup'
 
-export default function Home() {
+export default function ProductCustomerPage() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-between">
       <div className="max-w-6xl w-full">

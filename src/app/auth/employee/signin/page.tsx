@@ -8,13 +8,13 @@ import FormControl from '@mui/material/FormControl'
 import React, { useState } from 'react'
 import { SubmitHandler, useForm, useWatch } from 'react-hook-form'
 import * as yup from 'yup'
-import CustomTextField from '~/components/util/customTextField'
-import TextHover from '~/components/util/textHover'
-import useRoute from '~/hook/router'
-import AuthPage from '../page'
-import { SearchParamsSignup } from '../signup/page'
-import { useServiceAuth } from '~/service/reno/useServiceAuth'
+import CustomTextField from '@/components/util/customTextField'
+import TextHover from '@/components/util/textHover'
+import useRoute from '@/hook/router'
+import { useServiceAuth } from '@/service/reno/useServiceAuth'
 import { AxiosError } from 'axios'
+import AuthEmployeePage from '@/app/auth/employee/page'
+import { SearchParamsSignup } from '@/app/auth/employee/signup/page'
 
 const schema = yup.object({
   username: yup.string().required('Username is required'),
@@ -23,9 +23,7 @@ const schema = yup.object({
 
 type SignInSchema = yup.InferType<typeof schema>
 
-interface MyComponentProps {}
-
-const SigninPage = (props: MyComponentProps) => {
+const AuthEmployeeSigninPage = () => {
   const [isLoading, setIsLoading] = React.useState(false)
   const route = useRoute<SearchParamsSignup>()
   const { signin } = useServiceAuth()
@@ -125,7 +123,7 @@ const SigninPage = (props: MyComponentProps) => {
   }
 
   return (
-    <AuthPage>
+    <AuthEmployeePage>
       <Container className="flex flex-col items-center justify-center w-full h-screen">
         <div className="flex flex-col h-full justify-center">
           <div className="flex flex-col w-full">
@@ -153,8 +151,8 @@ const SigninPage = (props: MyComponentProps) => {
           </FormControl>
         </div>
       </Container>
-    </AuthPage>
+    </AuthEmployeePage>
   )
 }
 
-export default SigninPage
+export default AuthEmployeeSigninPage

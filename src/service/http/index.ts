@@ -1,7 +1,7 @@
 import Axios, { AxiosInstance } from 'axios'
-import { PATHS } from '~/hook/router'
-import { RefreshTokenResponse } from '~/model/auth/refreshTokenResponse'
-import { SigninResponse } from '~/model/auth/signinResponse'
+import { PATHS } from '@/hook/router'
+import { RefreshTokenResponse } from '@/model/auth/refreshTokenResponse'
+import { SigninResponse } from '@/model/auth/signinResponse'
 const LOCAL_STORAGE_AUTH_KEY: string = 'AUTH'
 
 enum API_PATH {

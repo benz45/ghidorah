@@ -3,7 +3,7 @@ import { Dialog } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import Image from 'next/image'
 import { useState } from 'react'
-import useRoute from '~/hook/router'
+import useRoute from '@/hook/router'
 
 const navigation = [
   { name: 'Product', href: '#' },
@@ -12,7 +12,7 @@ const navigation = [
   { name: 'Company', href: '#' }
 ]
 
-export default function Example() {
+export default function Page() {
   const route = useRoute()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   return (

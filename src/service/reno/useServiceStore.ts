@@ -1,5 +1,5 @@
 
-import { usePostMethod } from '../http/methods'
+import { usePostMethod } from '@/service/http/methods'
 
 
 export function useServiceStore() {

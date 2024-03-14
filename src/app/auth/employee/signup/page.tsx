@@ -1,4 +1,12 @@
 'use client'
+import AuthEmployeePage from '@/app/auth/employee/page'
+import CustomSelect from '@/components/util/customSelect'
+import CustomTextField from '@/components/util/customTextField'
+import TextHover from '@/components/util/textHover'
+import * as DateConstant from '@/constant/dateConstant'
+import useRoute from '@/hook/router'
+import { CreateEmployeeRequest } from '@/model/employee/createEmployeeRequest'
+import { useServiceEmployee } from '@/service/reno/useServiceEmployee'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { LoadingButton } from '@mui/lab'
 import { Box, Container, FormControlLabel, FormLabel, Grid, Radio, RadioGroup } from '@mui/material'
@@ -6,22 +14,6 @@ import FormControl from '@mui/material/FormControl'
 import { useState } from 'react'
 import { SubmitHandler, useForm, useWatch } from 'react-hook-form'
 import * as yup from 'yup'
-import CustomSelect from '~/components/util/customSelect'
-import CustomTextField from '~/components/util/customTextField'
-import TextHover from '~/components/util/textHover'
-import * as DateConstant from '~/constant/dateConstant'
-import useRoute from '~/hook/router'
-import { CreateEmployeeRequest } from '~/model/employee/createEmployeeRequest'
-import { useServiceEmployee } from '~/service/reno/useServiceEmployee'
-import AuthPage from '../page'
-
-function checkValid<T>(value: T, onInValid: (value: T) => void, onValid: (value: NonNullable<T>) => void) {
-  if (value) {
-    onValid(value)
-  } else {
-    onInValid(value)
-  }
-}
 
 const schema = yup.object({
   name: yup.string().min(3).max(50).required('Name is required'),
@@ -48,7 +40,7 @@ export interface SearchParamsSignup {
   isSignupSuccess?: boolean
 }
 
-export default function SignupPage() {
+export default function AuthEmployeeSignupPage() {
   const { postEmployee } = useServiceEmployee()
 
   const route = useRoute<SearchParamsSignup>()
@@ -301,7 +293,7 @@ export default function SignupPage() {
   }
 
   return (
-    <AuthPage>
+    <AuthEmployeePage>
       <Container className="flex flex-col items-center justify-center w-2/4 p-14">
         <div className="flex flex-col w-full">
           <div className="font-bold text-4xl text-primary pb-4">Get Started Employee</div>
@@ -370,6 +362,6 @@ export default function SignupPage() {
           </Box>
         </FormControl>
       </Container>
-    </AuthPage>
+    </AuthEmployeePage>
   )
 }

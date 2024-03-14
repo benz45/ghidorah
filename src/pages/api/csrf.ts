@@ -1,7 +1,7 @@
 import { AxiosError } from 'axios'
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { CSRFResponse } from '~/model/CSRFResponse'
-import axios from '~/service/http'
+import { CSRFResponse } from '@/model/csrfResponse'
+import axios from '@/service/http'
 
 async function handler(req: NextApiRequest, res: NextApiResponse<CSRFResponse | { message: string }>) {
   try {

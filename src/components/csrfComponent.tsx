@@ -1,7 +1,7 @@
 'use client'
 import React from 'react'
-import { CSRFResponse } from '~/model/CSRFResponse'
-import { ServiceApi } from '~/service/api'
+import { CSRFResponse } from '@/model/csrfResponse'
+import { ServiceApi } from '@/service/api'
 
 interface CSRFContext {
   csrf: CSRFResponse | undefined
