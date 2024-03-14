@@ -13,9 +13,11 @@ import TextHover from '~/components/util/textHover'
 import useRoute from '~/hook/router'
 import AuthPage from '../page'
 import { SearchParamsSignup } from '../signup/page'
+import { useServiceAuth } from '~/service/reno/useServiceAuth'
+import { AxiosError } from 'axios'
 
 const schema = yup.object({
-  email: yup.string().email().required('Email is required'),
+  username: yup.string().required('Username is required'),
   password: yup.string().min(8).max(50).required('Password is required')
 })
 
@@ -26,10 +28,8 @@ interface MyComponentProps {}
 const SigninPage = (props: MyComponentProps) => {
   const [isLoading, setIsLoading] = React.useState(false)
   const route = useRoute<SearchParamsSignup>()
-
+  const { signin } = useServiceAuth()
   const [errorMessage, setErrorMessage] = useState<string | undefined>()
-
-  const email = route.get('email')
   const isSignupSuccess = route.get('isSignupSuccess')
 
   const {
@@ -43,7 +43,7 @@ const SigninPage = (props: MyComponentProps) => {
     mode: 'onSubmit',
     reValidateMode: 'onSubmit',
     defaultValues: {
-      email: email ?? ''
+      username: route.get('username') ?? ''
     }
   })
   const values = useWatch({
@@ -51,18 +51,18 @@ const SigninPage = (props: MyComponentProps) => {
     exact: true
   })
 
-  function renderEmailInput() {
+  function renderUsernameInput() {
     return (
       <CustomTextField
-        {...register('email', { required: true })}
-        id="email"
-        label="Email"
-        placeholder="Please enter you email"
-        type="email"
-        value={values.email ?? ''}
-        onChange={e => setValue('email', e.target.value)}
-        error={!!errors.email}
-        helperText={errors.email?.message}
+        {...register('username', { required: true })}
+        id="username"
+        label="Username"
+        placeholder="Please enter you username"
+        type="text"
+        value={values.username ?? ''}
+        onChange={e => setValue('username', e.target.value)}
+        error={!!errors.username}
+        helperText={errors.username?.message}
         className="flex w-[452px]"
       />
     )
@@ -103,22 +103,25 @@ const SigninPage = (props: MyComponentProps) => {
     return <></>
   }
 
-  const signIn: SubmitHandler<SignInSchema> = async ({ email, password }) => {
+  const signIn: SubmitHandler<SignInSchema> = async ({ username, password }) => {
     setIsLoading(true)
     await new Promise(res => setTimeout(res, 2000))
     try {
-      // const { data, error } = await authBusiness.signIn(email, password)
-      // if (error) {
-      //   throw new Error(error.message)
-      // }
-      route.route('/auth')
+      const response = await signin.trigger({ username, password })
+      localStorage.setItem('AUTH', JSON.stringify(response))
+      route.route('/product/employee')
     } catch (error) {
-      if (error instanceof Error) {
-        console.error(error.message)
+      if (error instanceof AxiosError) {
+        if (error.code === AxiosError.ERR_BAD_REQUEST) {
+          setErrorMessage('Invalid username or password')
+        } else {
+          setErrorMessage(error.message)
+        }
+      } else if (error instanceof Error) {
         setErrorMessage(error.message)
       }
+      setIsLoading(false)
     }
-    setIsLoading(false)
   }
 
   return (
@@ -128,7 +131,7 @@ const SigninPage = (props: MyComponentProps) => {
           <div className="flex flex-col w-full">
             <div className="font-bold text-4xl text-primary pb-4 select-none">Get Started Employee</div>
             <div className="text-gray-500 pb-6">
-              <span className="select-none">Already have an account? </span>
+              <span className="select-none">Dont&lsquo;t have an account?</span>
               <TextHover onClick={() => route.route('/auth/employee/signup')} className="font-semibold text-primary">
                 Sign Up
               </TextHover>
@@ -137,7 +140,7 @@ const SigninPage = (props: MyComponentProps) => {
           <FormControl onSubmit={handleSubmit(signIn)} className="flex flex-col w-[452px]">
             {renderAlert()}
             <Box component="form" autoComplete="on">
-              <div className="w-full flex">{renderEmailInput()}</div>
+              <div className="w-full flex">{renderUsernameInput()}</div>
               <div className="w-full flex my-6">{renderPasswordInput()}</div>
               <LoadingButton variant="contained" loading={isLoading} size="large" type="submit" className="w-full mt-6">
                 Sign In

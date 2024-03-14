@@ -44,7 +44,7 @@ const schema = yup.object({
 type CreateUserSchema = yup.InferType<typeof schema>
 
 export interface SearchParamsSignup {
-  email?: string
+  username?: string
   isSignupSuccess?: boolean
 }
 
@@ -285,7 +285,7 @@ export default function SignupPage() {
         birthday: new Date(`${data.birthDate.year}-${data.birthDate.month}-${data.birthDate.day}`)
       }
       const employeeResponse = await postEmployee.trigger(createEmployeeRequest)
-      routeToSigninPage({ isSignupSuccess: true, email: employeeResponse?.email })
+      routeToSigninPage({ isSignupSuccess: true, username: data.username })
     } catch (error) {
       if (typeof error === 'string') {
         setErrorMessage(error as string)
@@ -296,8 +296,8 @@ export default function SignupPage() {
     }
   }
 
-  const routeToSigninPage = ({ email = '', isSignupSuccess = false }: SearchParamsSignup) => {
-    route.route('/auth/employee/signin', { email, isSignupSuccess })
+  const routeToSigninPage = ({ username = '', isSignupSuccess = false }: SearchParamsSignup) => {
+    route.route('/auth/employee/signin', { username, isSignupSuccess })
   }
 
   return (
