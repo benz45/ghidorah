@@ -52,24 +52,28 @@ axios.interceptors.request.use(
 
 axios.interceptors.response.use(
   config => {
-    const setCookie = config.headers['set-cookie']
-    if (setCookie) {
-      const xsrfToken = setCookie
-        .find(cookie => cookie.startsWith('XSRF-TOKEN='))!
-        .split(';')[0]
-        .split('=')[1]
-      if (xsrfToken) {
-        axios.defaults.headers.common['X-XSRF-TOKEN'] = xsrfToken
+    if (config.config.url?.startsWith(API_PATH.API_CSRF.valueOf())) {
+      const setCookie = config.headers['set-cookie']
+      if (setCookie) {
+        const xsrfToken = setCookie
+          .find(cookie => cookie.startsWith('XSRF-TOKEN='))
+          ?.split(';')[0]
+          .split('=')[1]
+        if (xsrfToken) {
+          axios.defaults.headers.common['X-XSRF-TOKEN'] = xsrfToken
+        }
+      } else {
+        const token = config.data?.['token']
+        if (token) {
+          axios.defaults.headers.common['X-XSRF-TOKEN'] = token
+        }
       }
     }
     return config
   },
   async error => {
     const originalRequest = error.config
-    if (
-      (error.response.status === 401 && !error.url?.startsWith(API_PATH.API_AUTH.valueOf())) ||
-      !error.url?.startsWith(API_PATH.API_CSRF.valueOf())
-    ) {
+    if (error.response.status === 401 && !error.url?.startsWith(API_PATH.API_AUTH.valueOf())) {
       try {
         const authLocalStorage = localStorage.getItem(LOCAL_STORAGE_AUTH_KEY)
         if (authLocalStorage) {
