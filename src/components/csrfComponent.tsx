@@ -1,7 +1,7 @@
 'use client'
 import React from 'react'
 import { CSRFResponse } from '~/model/CSRFResponse'
-import { getCsrfConfig } from '~/service/http/methods'
+import { ServiceApi } from '~/service/api'
 
 interface CSRFContext {
   csrf: CSRFResponse | undefined
@@ -11,7 +11,7 @@ export default function CsrfComponent({ children }: { children: React.ReactNode 
   const [csrf, setCsrf] = React.useState<CSRFResponse | undefined>(undefined)
   React.useEffect(() => {
     async function getCSRF() {
-      const res = await getCsrfConfig()
+      const res = await ServiceApi.get('api/csrf-token')
       setCsrf(res)
     }
     getCSRF()

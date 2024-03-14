@@ -34,15 +34,4 @@ export function useGetMethod<TypeResponse>(url: string, axios: AxiosInstance) {
   }
 }
 
-export async function getCsrfConfig() {
-  try {
-    const response = await axios.get('api/csrf-token')
-    return JSON.parse(JSON.stringify(response.data)) as CSRFResponse
-  } catch (error) {
-    if (error instanceof Error || error instanceof AxiosError) {
-      console.error(error.message)
-    } else {
-      console.error(error)
-    }
-  }
-}
+
