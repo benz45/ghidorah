@@ -150,6 +150,7 @@ function PageContent() {
 
 function TabSelectPages(props: TabSelectPagesControlProps) {
   const route = useRoute()
+  const context = useContext(TabSelectPagesControlContext)
   return (
     <div className="bg-white h-12 flex items-center">
       <div className="flex">
@@ -181,14 +182,14 @@ function TabSelectPages(props: TabSelectPagesControlProps) {
       </div>
       <div className="flex">
         <Each
-          values={props.tablabels}
+          values={context.tablabels}
           render={(label, index) => (
             <React.Fragment>
               <div
                 key={`TabSelectPages-${index}`}
-                onClick={() => props.setCurrentTab?.(index)}
+                onClick={() => context.setCurrentTab?.(index)}
                 className={`hover:bg-opacity-50 ${
-                  props.currentTab?.index === index
+                  context.currentTab?.index === index
                     ? 'bg-success text-white'
                     : 'bg-white text-gray-400 hover:text-gray-600 hover:bg-gray-200'
                 } px-5 py-2 rounded-lg text-sm mr-2 cursor-pointer`}
