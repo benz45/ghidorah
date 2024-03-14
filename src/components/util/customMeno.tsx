@@ -1,25 +1,22 @@
-import * as React from 'react'
-import { styled, alpha } from '@mui/material/styles'
-import Button from '@mui/material/Button'
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
+import { Divider } from '@mui/material'
+import Button, { ButtonOwnProps, ButtonPropsVariantOverrides } from '@mui/material/Button'
 import Menu, { MenuProps } from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
-import EditIcon from '@mui/icons-material/Edit'
-import Divider from '@mui/material/Divider'
-import ArchiveIcon from '@mui/icons-material/Archive'
-import FileCopyIcon from '@mui/icons-material/FileCopy'
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz'
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
+import { alpha, styled } from '@mui/material/styles'
+import * as React from 'react'
+import { Each } from '~/util/util'
 
 const StyledMenu = styled((props: MenuProps) => (
   <Menu
     elevation={0}
     anchorOrigin={{
       vertical: 'bottom',
-      horizontal: 'right'
+      horizontal: 'left'
     }}
     transformOrigin={{
       vertical: 'top',
-      horizontal: 'right'
+      horizontal: 'left'
     }}
     {...props}
   />
@@ -48,7 +45,11 @@ const StyledMenu = styled((props: MenuProps) => (
 }))
 
 interface CustomizedMenusProps {
+  id?: string
+  menulabel: string
   options: { icon: React.JSX.Element; label: string; onClick?: () => void; isShowDividerBottom?: boolean }[]
+  variant?: ButtonOwnProps['variant']
+  className?: string
 }
 
 export default function CustomizedMenus(props: CustomizedMenusProps) {
@@ -62,38 +63,41 @@ export default function CustomizedMenus(props: CustomizedMenusProps) {
     event?.()
   }
 
-  const menuOptions = props.options.map((elem, index) => {
-    return (
-      <MenuItem key={`menuOptions-${index}`} onClick={() => handleClose(elem.onClick)} disableRipple>
-        {elem.icon}
-        {elem.label}
-      </MenuItem>
-    )
-  })
   return (
-    <div>
+    <div className={`${props.className}`}>
       <Button
-        id="demo-customized-button"
-        aria-controls={open ? 'demo-customized-menu' : undefined}
+        id={props.id ?? ''}
+        aria-controls={open ? 'customized-menu' : undefined}
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}
-        variant="contained"
+        variant={props.variant ? props.variant : 'contained'}
         disableElevation
         onClick={handleClick}
         endIcon={<KeyboardArrowDownIcon />}
       >
-        Options
+        {props.menulabel}
       </Button>
       <StyledMenu
-        id="demo-customized-menu"
+        id="customized-menu"
         MenuListProps={{
-          'aria-labelledby': 'demo-customized-button'
+          'aria-labelledby': 'customized-menu-button'
         }}
         anchorEl={anchorEl}
         open={open}
         onClose={() => handleClose(undefined)}
       >
-        {menuOptions}
+        <Each
+          values={props.options}
+          render={(elem, index) => (
+            <React.Fragment>
+              <MenuItem key={`menuOptions-${index}`} onClick={() => handleClose(elem.onClick)} disableRipple>
+                {elem.icon}
+                {elem.label}
+              </MenuItem>
+              {elem.isShowDividerBottom && <Divider />}
+            </React.Fragment>
+          )}
+        />
       </StyledMenu>
     </div>
   )

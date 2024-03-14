@@ -17,10 +17,10 @@ const TabSelectPagesControlContextValue: ITabSelectPagesControl = {
 }
 
 export const TabSelectPagesControlContext = React.createContext(TabSelectPagesControlContextValue)
-function TabSelectPagesControl(props: { children: React.ReactNode[]; labels: string[] }) {
+function TabSelectPagesControl(props: { children: React.ReactNode[]; labels: string[]; initialPage: number }) {
   const [currentTab, setCurrentTab] = React.useState<ITabSelectPagesControl['currentTab']>({
-    index: 0,
-    label: props.labels[0]
+    index: props.initialPage,
+    label: props.labels[props.initialPage]
   })
   const shouldSetCurrentTab = (index: number) => setCurrentTab(prev => ({ index, label: props.labels[index] }))
   const childrens = props.children.map((children, index) => {

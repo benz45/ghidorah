@@ -7,22 +7,32 @@ import EditIcon from '@mui/icons-material/Edit'
 import PrintIcon from '@mui/icons-material/Print'
 import SearchIcon from '@mui/icons-material/Search'
 
+import StorefrontIcon from '@mui/icons-material/Storefront'
 import { TabContext, TabList, TabPanel } from '@mui/lab'
 import { Box, Grid, Tab } from '@mui/material'
 import { useServiceProduct, useWatcherService } from '~/service/reno/useServiceProduct'
-import CustomizedMenus from '../util/customMeno'
 import CreateProductModal, { CreateProductModalContext } from './createProductModal'
+import CustomizedMenus from '~/components/util/customMeno'
+import useRoute from '~/hook/router'
 import TabSelectPagesControl, {
   TabSelectPagesControlContext,
   TabSelectPagesControlProps
 } from './tabSelectPagesControl'
+import { Each } from '~/util/util'
 
+export interface RouteParamHomePage {
+  TabSelectinitialIndex?: number
+}
 export default function HomePage() {
   const { getProduct } = useServiceProduct()
   const { data } = useWatcherService(getProduct)
-
+  const route = useRoute<RouteParamHomePage>()
+  console.log(data)
   return (
-    <TabSelectPagesControl labels={['Products', 'Order', 'Table View', 'Pay Later View']}>
+    <TabSelectPagesControl
+      labels={['Products', 'Order', 'Table View', 'Pay Later View']}
+      initialPage={route.get('TabSelectinitialIndex') ?? 0}
+    >
       <TabSelectPages />
       <PageContainer>
         <Page page={1}>
@@ -60,6 +70,7 @@ function ProductPageOptions() {
   return (
     <PageOptions>
       <CustomizedMenus
+        menulabel="Options"
         options={[
           {
             icon: <AddIcon />,
@@ -138,22 +149,58 @@ function PageContent() {
 }
 
 function TabSelectPages(props: TabSelectPagesControlProps) {
-  const elements = props.tablabels?.map((label, index) => {
-    return (
-      <div
-        key={`TabSelectPages-${index}`}
-        onClick={() => props.setCurrentTab?.(index)}
-        className={`hover:bg-opacity-50 ${
-          props.currentTab?.index === index
-            ? 'bg-success text-white'
-            : 'bg-white text-gray-400 hover:text-gray-600 hover:bg-gray-200'
-        } px-5 py-2 rounded-lg text-sm mr-2 cursor-pointer`}
-      >
-        {label}
+  const route = useRoute()
+  return (
+    <div className="bg-white h-12 flex items-center">
+      <div className="flex">
+        <CustomizedMenus
+          variant="text"
+          className="pr-4"
+          menulabel="Store Name"
+          options={[
+            {
+              icon: <StorefrontIcon />,
+              label: 'Store Name',
+              onClick: () => {}
+            },
+            {
+              icon: <StorefrontIcon />,
+              label: 'Store Name',
+              isShowDividerBottom: true,
+              onClick: () => {}
+            },
+            {
+              icon: <AddIcon />,
+              label: 'Create Store',
+              onClick: () => {
+                route.to('/store', { tebIndex: 2 })
+              }
+            }
+          ]}
+        />
       </div>
-    )
-  })
-  return <div className="bg-white h-12 flex items-center">{elements}</div>
+      <div className="flex">
+        <Each
+          values={props.tablabels}
+          render={(label, index) => (
+            <React.Fragment>
+              <div
+                key={`TabSelectPages-${index}`}
+                onClick={() => props.setCurrentTab?.(index)}
+                className={`hover:bg-opacity-50 ${
+                  props.currentTab?.index === index
+                    ? 'bg-success text-white'
+                    : 'bg-white text-gray-400 hover:text-gray-600 hover:bg-gray-200'
+                } px-5 py-2 rounded-lg text-sm mr-2 cursor-pointer`}
+              >
+                {label}
+              </div>
+            </React.Fragment>
+          )}
+        />
+      </div>
+    </div>
+  )
 }
 
 function OrderItems() {

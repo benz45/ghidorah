@@ -1,9 +1,22 @@
-import { LoadingButton, LoadingButtonOwnProps } from '@mui/lab'
+import Stack from '@mui/material/Stack'
 
-export default function CustomButton(props: LoadingButtonOwnProps & { text: string }) {
+export default function CustomizedButtons(props: {
+  text: string
+  variant?: 'sorf' | 'contained'
+  onClick?: () => void
+}) {
+  let className =
+    'rounded-lg p-4 font-semibold focus:ring-offset-2 focus:ring-2 min-w-32 transition duration-300 ease-in-out'
+  if (props.variant == undefined || props.variant == 'contained') {
+    className = `${className} bg-primary text-white hover:bg-primary-dark`
+  } else if (props.variant === 'sorf') {
+    className = `${className} bg-primary-50 text-primary hover:bg-primary-70 focus:ring-primary-100`
+  }
   return (
-    <LoadingButton variant="contained" {...props} size="large">
-      {props.text}
-    </LoadingButton>
+    <Stack spacing={2} direction="row">
+      <button className={className} onClick={() => props.onClick?.()}>
+        {props.text}
+      </button>
+    </Stack>
   )
 }
