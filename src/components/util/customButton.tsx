@@ -2,6 +2,7 @@ import Stack from '@mui/material/Stack'
 
 export default function CustomizedButtons(props: {
   text: string
+  type?: 'button' | 'reset' | 'submit'
   variant?: 'sorf' | 'contained'
   onClick?: () => void
 }) {
@@ -14,7 +15,7 @@ export default function CustomizedButtons(props: {
   }
   return (
     <Stack spacing={2} direction="row">
-      <button className={className} onClick={() => props.onClick?.()}>
+      <button type={props.type ?? 'button'} className={className} onClick={() => props.onClick?.()}>
         {props.text}
       </button>
     </Stack>

@@ -1,29 +1,29 @@
 'use client'
 import { yupResolver } from '@hookform/resolvers/yup'
+import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import { Box, Grid } from '@mui/material'
 import FormControl from '@mui/material/FormControl'
+import { ChangeEvent, useState } from 'react'
+import { SubmitHandler, useForm, useWatch } from 'react-hook-form'
+import * as yup from 'yup'
 import CustomizedButtons from '~/components/util/customButton'
 import CustomTextField from '~/components/util/customTextField'
 import InputImageUpload from '~/components/util/uploadImage'
 import useRoute from '~/hook/router'
-import { ChangeEvent, useState } from 'react'
-import { SubmitHandler, useForm, useWatch } from 'react-hook-form'
-import { useServiceCustomer } from '~/service/reno/useServiceCustomer'
-import * as yup from 'yup'
-import CheckCircleIcon from '@mui/icons-material/CheckCircle'
+import { useServiceStore } from '../../../service/reno/useServiceStore'
 
 const schema = yup.object({
   storeName: yup.string().min(3).max(50).required('Name is required'),
   detail: yup.string().max(300),
   phoneNumber: yup.string().min(10).max(10).required('Phone number is required'),
-  houseNumber: yup.string().max(10).required('House number is required'),
-  subdistrict: yup.string().max(10).required('Subdistrict is required'),
-  district: yup.string().max(10).required('District is required'),
-  province: yup.string().max(10).required('Province is required'),
-  provinceCode: yup.number().max(10).required('Province code is required')
+  houseNumber: yup.string().required('House number is required'),
+  subdistrict: yup.string().required('Subdistrict is required'),
+  district: yup.string().required('District is required'),
+  province: yup.string().required('Province is required'),
+  postalcode: yup.number().required('Province code is required')
 })
 
-type CreateUserSchema = yup.InferType<typeof schema>
+type CreateStoreSchema = yup.InferType<typeof schema>
 
 export interface SearchParamsSignup {
   email?: string
@@ -36,7 +36,7 @@ interface ContentCreateStoreProps {
 }
 
 export default function ContentCreateStore(props: ContentCreateStoreProps) {
-  const { postCustomer } = useServiceCustomer()
+  const { postStore } = useServiceStore()
 
   const route = useRoute<SearchParamsSignup>()
 
@@ -47,7 +47,7 @@ export default function ContentCreateStore(props: ContentCreateStoreProps) {
     setValue,
     control,
     formState: { errors }
-  } = useForm<CreateUserSchema>({ resolver: yupResolver(schema), mode: 'onSubmit', reValidateMode: 'onSubmit' })
+  } = useForm<CreateStoreSchema>({ resolver: yupResolver(schema), mode: 'onSubmit', reValidateMode: 'onSubmit' })
   const values = useWatch({
     control,
     exact: true
@@ -131,14 +131,14 @@ export default function ContentCreateStore(props: ContentCreateStoreProps) {
       isError: !!errors.province,
       errorMessage: errors.province?.message
     }),
-    provinceCode: renderInput({
-      registerType: 'provinceCode',
-      label: 'Province Code',
+    postalcode: renderInput({
+      registerType: 'postalcode',
+      label: 'Postal Code',
       inputType: 'number',
-      value: values.provinceCode,
+      value: values.postalcode,
       onSetValue: (t, e) => setValue(t, +e.target.value),
-      isError: !!errors.provinceCode,
-      errorMessage: errors.provinceCode?.message
+      isError: !!errors.postalcode,
+      errorMessage: errors.postalcode?.message
     }),
     subdistrict: renderInput({
       registerType: 'subdistrict',
@@ -166,21 +166,21 @@ export default function ContentCreateStore(props: ContentCreateStoreProps) {
     )
   }
 
-  const onSubmit: SubmitHandler<CreateUserSchema> = async data => {
+  const onSubmit: SubmitHandler<CreateStoreSchema> = async data => {
     try {
-      // const createCustomerRequest: CreateCustomerRequest = {
-      //   name: data.name,
-      //   username: data.username,
-      //   password: data.password,
-      //   email: data.email,
-      //   gender: {
-      //     id: data.gender
-      //   },
-      //   tal: data.phoneNumber,
-      //   birthday: new Date(`${data.birthDate.year}-${data.birthDate.month}-${data.birthDate.day}`)
-      // }
-      // const customerResponse: CustomerResponse | undefined = await createCustomer(createCustomerRequest)
-      // routeToSigninPage({ isSignupSuccess: true, email: customerResponse?.email })
+      postStore.trigger({
+        employeeId: 1,
+        storeName: data.storeName,
+        detail: data.detail ?? '',
+        address: {
+          houseNumber: data.houseNumber,
+          district: data.district,
+          subdistrict: data.subdistrict,
+          province: data.province,
+          postalcode: data.postalcode,
+          tal: data.phoneNumber
+        }
+      })
     } catch (error) {
       if (typeof error === 'string') {
         setErrorMessage(error as string)
@@ -194,18 +194,10 @@ export default function ContentCreateStore(props: ContentCreateStoreProps) {
   const routeToSigninPage = ({ email = '', isSignupSuccess = false }: SearchParamsSignup) => {
     route.to('/auth', { email, isSignupSuccess })
   }
-
   return (
     <FormControl onSubmit={handleSubmit(onSubmit)} className="flex w-full">
       {errorBox()}
-      <Box className="flex-grow w-full">
-        {/* {props.activeId === 1 && (
-          <>
-            <div className="w-full flex pb-6">
-              <InputImageUpload />
-            </div>
-          </>
-        )} */}
+      <Box component="form" autoComplete="off" className="flex-grow w-full">
         <Grid container spacing={2}>
           {props.activeId === 1 && (
             <>
@@ -242,7 +234,7 @@ export default function ContentCreateStore(props: ContentCreateStoreProps) {
                 {objInput.province}
               </Grid>
               <Grid item xs={6}>
-                {objInput.provinceCode}
+                {objInput.postalcode}
               </Grid>
               <Grid item xs={6}>
                 {objInput.phoneNumber}
@@ -250,7 +242,7 @@ export default function ContentCreateStore(props: ContentCreateStoreProps) {
               <Grid item xs={12}>
                 <div className="flex w-full justify-between">
                   <CustomizedButtons text="Previous" variant="sorf" onClick={() => props.onPrevious()} />
-                  <CustomizedButtons text="Confirm" />
+                  <CustomizedButtons type="submit" text="Confirm" />
                 </div>
               </Grid>
             </>
