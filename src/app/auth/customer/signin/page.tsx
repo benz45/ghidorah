@@ -15,6 +15,7 @@ import useRoute from '~/hook/router'
 import { useServiceAuth } from '~/service/reno/useServiceAuth'
 import AuthPage from '../page'
 import { SearchParamsSignup } from '../signup/page'
+import { AxiosError } from 'axios'
 
 const schema = yup.object({
   username: yup.string().required('Username is required'),
@@ -22,8 +23,6 @@ const schema = yup.object({
 })
 
 type SignInSchema = yup.InferType<typeof schema>
-
-interface MyComponentProps {}
 
 function SigninPage() {
   const context = React.useContext(CSRFContext)
@@ -113,19 +112,19 @@ function SigninPage() {
     try {
       const response = await signin.trigger({ username, password })
       localStorage.setItem('AUTH', JSON.stringify(response))
-      // response.accessToken
-      // const { data, error } = await authBusiness.signIn(username, password)
-      // if (error) {
-      //   throw new Error(error.message)
-      // }
-      // route.route('/')
+      route.route('/')
     } catch (error) {
-      if (error instanceof Error) {
-        console.error(error.message)
+      if (error instanceof AxiosError) {
+        if (error.code === AxiosError.ERR_BAD_REQUEST) {
+          setErrorMessage('Invalid username or password')
+        } else {
+          setErrorMessage(error.message)
+        }
+      } else if (error instanceof Error) {
         setErrorMessage(error.message)
       }
+      setIsLoading(false)
     }
-    setIsLoading(false)
   }
 
   return (

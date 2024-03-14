@@ -1,0 +1,8 @@
+export enum RoleTypeConstant {
+  ROLE_USER_ID=1,
+  ROLE_MODERATOR_ID=2,
+  ROLE_ADMIN_ID=3,
+  ROLE_USER,
+  ROLE_MODERATOR,
+  ROLE_ADMIN
+}

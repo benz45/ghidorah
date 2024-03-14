@@ -15,6 +15,11 @@ import { CreateCustomerRequest } from '~/model/customer/createCustomerRequest'
 import { CustomerResponse } from '~/model/customer/customerResponse'
 import { useServiceCustomer } from '~/service/reno/useServiceCustomer'
 import AuthPage from '../page'
+import { useServiceAuth } from '~/service/reno/useServiceAuth'
+import { SignupRequest } from '~/model/auth/signupRequest'
+import { SignupResponse } from '~/model/auth/signupResponse'
+import { UserTypeConstant } from '~/constant/userTypeConstant'
+import { RoleTypeConstant } from '~/constant/roleTypeConstant'
 
 const schema = yup.object({
   name: yup.string().min(3).max(50).required('Name is required'),
@@ -42,7 +47,7 @@ export interface SearchParamsSignup {
 }
 
 export default function SignupPage() {
-  const { postCustomer } = useServiceCustomer()
+  const { signup } = useServiceAuth()
 
   const route = useRoute<SearchParamsSignup>()
 
@@ -266,19 +271,21 @@ export default function SignupPage() {
 
   const onSubmit: SubmitHandler<CreateUserSchema> = async data => {
     try {
-      const createCustomerRequest: CreateCustomerRequest = {
+      const request: SignupRequest = {
         name: data.name,
         username: data.username,
         password: data.password,
         email: data.email,
+        userTypeId: UserTypeConstant.CUSTOMER_ID,
+        role: [RoleTypeConstant.ROLE_USER_ID, RoleTypeConstant.ROLE_MODERATOR_ID],
         gender: {
           id: data.gender
         },
         tal: data.phoneNumber,
         birthday: new Date(`${data.birthDate.year}-${data.birthDate.month}-${data.birthDate.day}`)
       }
-      const customerResponse: CustomerResponse | undefined = await postCustomer.trigger(createCustomerRequest)
-      routeToSigninPage({ isSignupSuccess: true, username: customerResponse?.email })
+      await signup.trigger(request)
+      routeToSigninPage({ isSignupSuccess: true, username: data.username })
     } catch (error) {
       if (typeof error === 'string') {
         setErrorMessage(error as string)
@@ -289,8 +296,8 @@ export default function SignupPage() {
     }
   }
 
-  const routeToSigninPage = ({ username: email = '', isSignupSuccess = false }: SearchParamsSignup) => {
-    route.route('/auth/customer/signin', { username: email, isSignupSuccess })
+  const routeToSigninPage = ({ username, isSignupSuccess = false }: SearchParamsSignup) => {
+    route.route('/auth/customer/signin', { username, isSignupSuccess })
   }
 
   return (
@@ -346,13 +353,7 @@ export default function SignupPage() {
                 {renderConfirmPasswordInput()}
               </Grid>
               <Grid item md={12}>
-                <LoadingButton
-                  variant="contained"
-                  loading={postCustomer.isLoading}
-                  size="large"
-                  fullWidth
-                  type="submit"
-                >
+                <LoadingButton variant="contained" loading={signup.isLoading} size="large" fullWidth type="submit">
                   Sign Up
                 </LoadingButton>
                 <div className="text-gray-500 pt-8">
