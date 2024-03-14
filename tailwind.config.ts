@@ -19,6 +19,13 @@ const config: Config = {
         montserrat: ["var(--font-montserrat"],
         sansitaSwashed: ["var(--font-sansita-swashed)"],
       },
+      colors: {
+        primary: '#5770FD',
+        'primary-light': '#F3F7FF',
+        secondary: '#FFD200',
+        success: '#06D6A0',
+        error: '#FC4855',
+      },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":

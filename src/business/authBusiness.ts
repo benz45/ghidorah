@@ -1,5 +1,5 @@
-import supabase from "@/config/supabaseClient";
-import { AuthError, UserResponse } from "@supabase/supabase-js";
+import supabase from '~/config/supabaseClient'
+import { AuthError, AuthResponse, UserResponse } from '@supabase/supabase-js'
 
 class AuthBusiness {
   public async getUser(): Promise<UserResponse | undefined> {
@@ -7,38 +7,49 @@ class AuthBusiness {
       const user: UserResponse = await new Promise((resolve, reject) => {
         supabase.auth
           .getUser()
-          .then((value) => resolve(value))
-          .catch((err) => reject(err));
-      });
-      return user;
+          .then(value => resolve(value))
+          .catch(err => reject(err))
+      })
+      return user
     } catch (error) {
-      console.error(error);
+      console.error(error)
     }
   }
 
-  public async signInWithPassword(email: string, password: string) {
+  public async signIn(email: string, password: string) {
     try {
       return await supabase.auth.signInWithPassword({
         email,
-        password,
-      });
+        password
+      })
     } catch (error) {
-      console.error(error);
+      throw Error('error sign in')
+    }
+  }
+
+  public async signUpWithEmailAndPassword(email: string, password: string): Promise<AuthResponse | undefined> {
+    try {
+      return await supabase.auth.signUp({
+        email,
+        password
+      })
+    } catch (error) {
+      console.error(error)
     }
   }
 
   public async signOut(): Promise<
     | {
-        error: AuthError | null;
+        error: AuthError | null
       }
     | undefined
   > {
     try {
-      return await supabase.auth.signOut();
+      return await supabase.auth.signOut()
     } catch (error) {
-      console.error(error);
+      console.error(error)
     }
   }
 }
 
-export default AuthBusiness;
+export default AuthBusiness

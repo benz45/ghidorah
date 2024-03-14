@@ -1,15 +1,23 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  reactStrictMode: false,
   images: {
     remotePatterns: [
       {
-        // https://picsum.photos/200/200
-        protocol: "https",
-        hostname: "*",
-        port: "",
-      },
-    ],
+        protocol: 'https',
+        hostname: '*',
+        port: ''
+      }
+    ]
   },
-};
+  async rewrites() {
+    return [
+      {
+        source: '/api/:path*',
+        destination: 'http://localhost:8080/:path*' // Proxy to Backend
+      }
+    ]
+  }
+}
 
-module.exports = nextConfig;
+module.exports = nextConfig

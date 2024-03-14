@@ -1,25 +1,24 @@
-"use client";
-import AuthBusiness from "@/business/authBusiness";
-import React, { useEffect } from "react";
-import { useRouter } from "next/navigation";
+'use client'
+import AuthBusiness from '~/business/authBusiness'
+import React, { useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 
 const Auth = ({ children }: { children: React.ReactNode }) => {
-  const authBusiness = new AuthBusiness();
-  const router = useRouter();
+  const authBusiness = new AuthBusiness()
+  const router = useRouter()
 
   async function getuser() {
-    const user = await authBusiness.getUser();
-    console.log(user);
-    // if (!user?.data?.user) {
-    //   router.push("/login");
-    // }
+    const user = await authBusiness.getUser()
+    if (!user?.data?.user) {
+      router.push('/auth/signin')
+    }
   }
 
   useEffect(() => {
-    getuser();
-  }, []);
+    getuser()
+  }, [])
 
-  return <>{children}</>;
-};
+  return <>{children}</>
+}
 
-export default Auth;
+export default Auth

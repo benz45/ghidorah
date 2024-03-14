@@ -1,7 +1,7 @@
 import React, { useState, Fragment } from "react";
 import ArrowIcon from "../icons/arrow";
 import { Transition, Menu } from "@headlessui/react";
-import AuthBusiness from "@/business/authBusiness";
+import AuthBusiness from "~/business/authBusiness";
 import { useRouter } from "next/navigation";
 
 function classNames(...classes: string[]) {
