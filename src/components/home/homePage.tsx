@@ -1,22 +1,26 @@
 'use client'
 import React, { useContext } from 'react'
 
+import AddIcon from '@mui/icons-material/Add'
 import CloseIcon from '@mui/icons-material/Close'
 import EditIcon from '@mui/icons-material/Edit'
 import PrintIcon from '@mui/icons-material/Print'
 import SearchIcon from '@mui/icons-material/Search'
-import AddIcon from '@mui/icons-material/Add'
 
 import { TabContext, TabList, TabPanel } from '@mui/lab'
 import { Box, Grid, Tab } from '@mui/material'
+import { useServiceProduct, useWatcherService } from '~/service/reno/useServiceProduct'
+import CustomizedMenus from '../util/customMeno'
+import CreateProductModal, { CreateProductModalContext } from './createProductModal'
 import TabSelectPagesControl, {
   TabSelectPagesControlContext,
   TabSelectPagesControlProps
 } from './tabSelectPagesControl'
-import CustomizedMenus from '../util/customMeno'
-import CreateProductModal, { CreateProductModalContext } from './createProductModal'
 
 export default function HomePage() {
+  const { getProduct } = useServiceProduct()
+  const { data } = useWatcherService(getProduct)
+
   return (
     <TabSelectPagesControl labels={['Products', 'Order', 'Table View', 'Pay Later View']}>
       <TabSelectPages />
