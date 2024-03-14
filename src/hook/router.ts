@@ -1,24 +1,28 @@
 import { useRouter, useSearchParams } from 'next/navigation'
-import { convertStringToShouldType } from '~/util/util'
+import { StorePageParams } from './routeParams'
+import { convertStringToShouldType } from '../util/util'
 
 export const PATHS = {
-  MAIN: '/',
-  AUTHORIZATION: '/auth',
-  CUSTOMER_SIGNIN: '/auth/customer/signin',
-  CUSTOMER_SIGNUP: '/auth/customer/signup',
-  EMPLOYEE_SIGNIN: '/auth/employee/signin',
-  EMPLOYEE_SIGNUP: '/auth/employee/signup',
-  CUSTOMER_PRODUCT: '/product/customer',
-  EMPLOYEE_PRODUCT: '/product/employee'
+  MAIN: {path:'/', params: {}},
+  AUTHORIZATION: {path:'/auth', params: {}},
+  CUSTOMER_SIGNIN: {path:'/auth/customer/signin', params:{}},
+  CUSTOMER_SIGNUP: {path:'/auth/customer/signup', params:{}},
+  EMPLOYEE_SIGNIN: {path:'/auth/employee/signin', params:{}},
+  EMPLOYEE_SIGNUP: {path:'/auth/employee/signup', params:{}},
+  STORE: {path:'/store', params: {} as StorePageParams},
+  CUSTOMER_PRODUCT: {path:'/product/customer', params:{}},
+  EMPLOYEE_PRODUCT: {path:'/product/employee', params:{}}
 } as const
 
-type PATHS = (typeof PATHS)[keyof typeof PATHS]
+
+type PATHS_TYPE = (typeof PATHS)[keyof typeof PATHS]
+export type ROUTE_PATH = keyof typeof PATHS
 
 const useRoute = <TypeParam>() => {
   const searchParams = useSearchParams()
   const router = useRouter()
 
-  const createSearchParams = (params: TypeParam) => {
+  const createSearchParams = <T>(params: T) => {
     const urlSearchParams = new URLSearchParams(searchParams?.toString())
     for (const key in params) {
       urlSearchParams.set(key, params[key] + '')
@@ -26,7 +30,7 @@ const useRoute = <TypeParam>() => {
     return `?${urlSearchParams.toString()}`
   }
 
-  const route = (pathcName: PATHS, state?: TypeParam) => {
+  const to = <T extends PATHS_TYPE>(pathcName: T['path'], state?: T['params']) => {
     const path = pathcName
     if (state) {
       const searchParam: string = createSearchParams(state)
@@ -43,7 +47,7 @@ const useRoute = <TypeParam>() => {
     }
   }
 
-  return { createSearchParams, route, get }
+  return { to, get }
 }
 
 export default useRoute

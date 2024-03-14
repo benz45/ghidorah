@@ -10,16 +10,12 @@ import CustomSelect from '~/components/util/customSelect'
 import CustomTextField from '~/components/util/customTextField'
 import TextHover from '~/components/util/textHover'
 import * as DateConstant from '~/constant/dateConstant'
-import useRoute from '~/hook/router'
-import { CreateCustomerRequest } from '~/model/customer/createCustomerRequest'
-import { CustomerResponse } from '~/model/customer/customerResponse'
-import { useServiceCustomer } from '~/service/reno/useServiceCustomer'
-import AuthPage from '../page'
-import { useServiceAuth } from '~/service/reno/useServiceAuth'
-import { SignupRequest } from '~/model/auth/signupRequest'
-import { SignupResponse } from '~/model/auth/signupResponse'
-import { UserTypeConstant } from '~/constant/userTypeConstant'
 import { RoleTypeConstant } from '~/constant/roleTypeConstant'
+import { UserTypeConstant } from '~/constant/userTypeConstant'
+import useRoute from '~/hook/router'
+import { SignupRequest } from '~/model/auth/signupRequest'
+import { useServiceAuth } from '~/service/reno/useServiceAuth'
+import AuthPage from '../page'
 
 const schema = yup.object({
   name: yup.string().min(3).max(50).required('Name is required'),
@@ -297,7 +293,7 @@ export default function SignupPage() {
   }
 
   const routeToSigninPage = ({ username, isSignupSuccess = false }: SearchParamsSignup) => {
-    route.route('/auth/customer/signin', { username, isSignupSuccess })
+    route.to('/auth/customer/signin', { username, isSignupSuccess })
   }
 
   return (
@@ -307,7 +303,7 @@ export default function SignupPage() {
           <div className="font-bold text-4xl text-primary pb-4">Get Started Customer </div>
           <div className="text-gray-500 pb-10">
             Already have an account?{' '}
-            <TextHover className="font-semibold text-primary" onClick={() => route.route('/auth/customer/signin')}>
+            <TextHover className="font-semibold text-primary" onClick={() => route.to('/auth/customer/signin')}>
               Sign In
             </TextHover>
           </div>

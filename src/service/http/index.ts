@@ -96,7 +96,7 @@ axios.interceptors.response.use(
         }
       } catch (err) {
         localStorage.removeItem(LOCAL_STORAGE_AUTH_KEY)
-        location.href = PATHS.AUTHORIZATION
+        location.href = PATHS.AUTHORIZATION.path
       }
     }
 

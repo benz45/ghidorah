@@ -297,7 +297,7 @@ export default function SignupPage() {
   }
 
   const routeToSigninPage = ({ username = '', isSignupSuccess = false }: SearchParamsSignup) => {
-    route.route('/auth/employee/signin', { username, isSignupSuccess })
+    route.to('/auth/employee/signin', { username, isSignupSuccess })
   }
 
   return (
@@ -307,7 +307,7 @@ export default function SignupPage() {
           <div className="font-bold text-4xl text-primary pb-4">Get Started Employee</div>
           <div className="text-gray-500 pb-10">
             Already have an account?{' '}
-            <TextHover className="font-semibold text-primary" onClick={() => route.route('/auth/employee/signin')}>
+            <TextHover className="font-semibold text-primary" onClick={() => route.to('/auth/employee/signin')}>
               Sign In
             </TextHover>
           </div>

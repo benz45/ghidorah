@@ -111,7 +111,7 @@ function SigninPage() {
     try {
       const response = await signin.trigger({ username, password })
       localStorage.setItem('AUTH', JSON.stringify(response))
-      route.route('/product/customer')
+      route.to('/product/customer')
     } catch (error) {
       if (error instanceof AxiosError) {
         if (error.code === AxiosError.ERR_BAD_REQUEST) {
@@ -134,7 +134,7 @@ function SigninPage() {
             <div className="font-bold text-4xl text-primary pb-4 select-none">Get Started Customer</div>
             <div className="text-gray-500 pb-6">
               <span className="select-none">Already have an account? </span>
-              <TextHover onClick={() => route.route('/auth/customer/signup')} className="font-semibold text-primary ">
+              <TextHover onClick={() => route.to('/auth/customer/signup')} className="font-semibold text-primary ">
                 Sign Up
               </TextHover>
             </div>

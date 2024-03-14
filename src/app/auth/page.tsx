@@ -7,8 +7,8 @@ import useRoute from '~/hook/router'
 export default function AuthPage() {
   const route = useRoute()
 
-  const navigateToCustomerSignin = () => route.route('/auth/customer/signin')
-  const navigateToEmployeeSignin = () => route.route('/auth/employee/signin')
+  const navigateToCustomerSignin = () => route.to('/auth/customer/signin')
+  const navigateToEmployeeSignin = () => route.to('/auth/employee/signin')
 
   const renderBaaseImage = () => {
     return (
