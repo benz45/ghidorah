@@ -8,7 +8,7 @@ import FormControl from '@mui/material/FormControl'
 import React, { useState } from 'react'
 import { SubmitHandler, useForm, useWatch } from 'react-hook-form'
 import * as yup from 'yup'
-import CSRF, { CSRFContext } from '~/components/CSRF'
+import CsrfComponent, { CSRFContext } from '~/components/csrfComponent'
 import CustomTextField from '~/components/util/customTextField'
 import TextHover from '~/components/util/textHover'
 import useRoute from '~/hook/router'
@@ -112,7 +112,7 @@ function SigninPage() {
     try {
       const response = await signin.trigger({ username, password })
       localStorage.setItem('AUTH', JSON.stringify(response))
-      route.route('/')
+      route.route('/product/customer')
     } catch (error) {
       if (error instanceof AxiosError) {
         if (error.code === AxiosError.ERR_BAD_REQUEST) {

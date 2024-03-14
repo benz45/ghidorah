@@ -146,7 +146,7 @@ export default function FormCreateProductModel() {
   }
 
   const routeToSigninPage = ({ email = '', isSignupSuccess = false }: SearchParamsSignup) => {
-    route.route('/auth/signin', { email, isSignupSuccess })
+    route.route('/auth', { email, isSignupSuccess })
   }
 
   return (

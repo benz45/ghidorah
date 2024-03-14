@@ -1,6 +1,18 @@
-import React from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { convertStringToShouldType } from '~/util/util'
+
+export const PATHS = {
+  MAIN: '/',
+  AUTHORIZATION: '/auth',
+  CUSTOMER_SIGNIN: '/auth/customer/signin',
+  CUSTOMER_SIGNUP: '/auth/customer/signup',
+  EMPLOYEE_SIGNIN: '/auth/employee/signin',
+  EMPLOYEE_SIGNUP: '/auth/employee/signup',
+  CUSTOMER_PRODUCT: '/product/customer',
+  EMPLOYEE_PRODUCT: '/product/employee'
+} as const
+
+type PATHS = (typeof PATHS)[keyof typeof PATHS]
 
 const useRoute = <TypeParam>() => {
   const searchParams = useSearchParams()
@@ -11,22 +23,23 @@ const useRoute = <TypeParam>() => {
     for (const key in params) {
       urlSearchParams.set(key, params[key] + '')
     }
-    return `?${urlSearchParams.toString()}`  
+    return `?${urlSearchParams.toString()}`
   }
 
-  const route = (pathcName: string, state?: TypeParam) => {
+  const route = (pathcName: PATHS, state?: TypeParam) => {
+    const path = pathcName
     if (state) {
-      const searchParam: string = createSearchParams(state);
-      router.push(pathcName+searchParam)
+      const searchParam: string = createSearchParams(state)
+      router.push(path + searchParam)
     } else {
-      router.push(pathcName)
+      router.push(path)
     }
   }
 
   const get = <T extends keyof TypeParam>(paramName: T) => {
     const value = searchParams?.get(paramName as string)
     if (value) {
-      return convertStringToShouldType(value)as TypeParam[T]
+      return convertStringToShouldType(value) as TypeParam[T]
     }
   }
 

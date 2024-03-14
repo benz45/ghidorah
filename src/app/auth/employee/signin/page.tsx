@@ -111,7 +111,7 @@ const SigninPage = (props: MyComponentProps) => {
       // if (error) {
       //   throw new Error(error.message)
       // }
-      route.route('/')
+      route.route('/auth')
     } catch (error) {
       if (error instanceof Error) {
         console.error(error.message)
