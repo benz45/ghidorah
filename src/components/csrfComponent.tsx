@@ -1,18 +1,17 @@
 'use client'
 import React from 'react'
 import { CSRFResponse } from '~/model/CSRFResponse'
-import axios from '~/service/http'
 import { getCsrfConfig } from '~/service/http/methods'
 
 interface CSRFContext {
   csrf: CSRFResponse | undefined
 }
 export const CSRFContext = React.createContext<CSRFContext>({ csrf: undefined })
-export default function CSRF({ children }: { children: React.ReactNode }) {
+export default function CsrfComponent({ children }: { children: React.ReactNode }) {
   const [csrf, setCsrf] = React.useState<CSRFResponse | undefined>(undefined)
   React.useEffect(() => {
     async function getCSRF() {
-      const res = await getCsrfConfig(axios)
+      const res = await getCsrfConfig()
       setCsrf(res)
     }
     getCSRF()

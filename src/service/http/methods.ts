@@ -1,5 +1,5 @@
 import useSWRMutation from 'swr/mutation'
-import { AxiosInstance } from 'axios'
+import { AxiosError, AxiosInstance } from 'axios'
 import { CSRFResponse } from '~/model/CSRFResponse'
 import axios from '../http'
 export function usePostMethod<TypeRequest, TypeResponse>(
@@ -34,16 +34,14 @@ export function useGetMethod<TypeResponse>(url: string, axios: AxiosInstance) {
   }
 }
 
-export async function getCsrfConfig(axios: AxiosInstance) {
+export async function getCsrfConfig() {
   try {
-    const response = await fetch('http://localhost:3000/api/csrf', {
-      cache: 'no-store',
-      credentials: 'include'
-    })
-    const data: CSRFResponse = await response.json()
-    return data
+    const response = await axios.get('api/csrf-token')
+    return JSON.parse(JSON.stringify(response.data)) as CSRFResponse
   } catch (error) {
-    if (error instanceof Error) {
+    if (error instanceof Error || error instanceof AxiosError) {
+      console.error(error.message)
+    } else {
       console.error(error)
     }
   }

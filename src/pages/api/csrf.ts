@@ -1,3 +1,4 @@
+import { AxiosError } from 'axios'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { CSRFResponse } from '~/model/CSRFResponse'
 import axios from '~/service/http'
@@ -11,6 +12,8 @@ async function handler(req: NextApiRequest, res: NextApiResponse<CSRFResponse | 
     if (error instanceof Error) {
       console.error(error)
       res.status(400).json({ message: error.message })
+    } else if (error instanceof AxiosError) {
+      res.status(400).json({ message: error.message})
     }
   }
 }

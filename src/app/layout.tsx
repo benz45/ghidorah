@@ -4,7 +4,7 @@ import type { Metadata } from 'next'
 import { montserrat, sansita_swashed } from './font'
 import './globals.css'
 import { Theme } from './theme'
-import CSRF from '~/components/CSRF'
+import CsrfComponent from '~/components/csrfComponent'
 
 export const metadata: Metadata = {
   title: 'Brugge',
@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <CSRF>
+    <CsrfComponent>
       <html lang="en">
         <Theme>
           <body className={`${sansita_swashed.variable} ${montserrat.className}`}>
@@ -21,6 +21,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </body>
         </Theme>
       </html>
-    </CSRF>
+    </CsrfComponent>
   )
 }
