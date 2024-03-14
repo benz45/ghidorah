@@ -1,3 +1,5 @@
+import { Children } from 'react'
+
 const isNum = (value: string) => /^-?\d+$/.test(value)
 const isBool = (value: string) => /^(?:true|false)$/gim.test(value)
 
@@ -24,3 +26,12 @@ declare global {
   }
 }
 
+export function Each<ValueType, RenderType extends (element: ValueType, index: number) => React.JSX.Element>(props: {
+  render: RenderType
+  values: ValueType[] | undefined
+}){
+  if (!props.values) {
+    return []
+  }
+  return Children.toArray(props.values?.map((_elem, index) => props.render(_elem, index)))
+}
