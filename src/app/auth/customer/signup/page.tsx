@@ -3,27 +3,18 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { LoadingButton } from '@mui/lab'
 import { Box, Container, FormControlLabel, FormLabel, Grid, Radio, RadioGroup } from '@mui/material'
 import FormControl from '@mui/material/FormControl'
-import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { SubmitHandler, useForm, useWatch } from 'react-hook-form'
 import * as yup from 'yup'
 import CustomSelect from '~/components/util/customSelect'
 import CustomTextField from '~/components/util/customTextField'
+import TextHover from '~/components/util/textHover'
 import * as DateConstant from '~/constant/dateConstant'
+import useRoute from '~/hook/router'
 import { CreateCustomerRequest } from '~/model/customer/createCustomerRequest'
 import { CustomerResponse } from '~/model/customer/customerResponse'
 import { useServiceCustomer } from '~/service/reno/useServiceCustomer'
-import useRoute from '~/hook/router'
 import AuthPage from '../page'
-import TextHover from '~/components/util/textHover'
-
-function checkValid<T>(value: T, onInValid: (value: T) => void, onValid: (value: NonNullable<T>) => void) {
-  if (value) {
-    onValid(value)
-  } else {
-    onInValid(value)
-  }
-}
 
 const schema = yup.object({
   name: yup.string().min(3).max(50).required('Name is required'),

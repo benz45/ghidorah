@@ -1,24 +1,20 @@
 'use client'
+import Image from 'next/image'
 import CategoryItem from '~/components/categoryItem'
-import ArrowIcon from '~/components/icons/arrow'
 import CartIcon from '~/components/icons/cart'
 import SearchIcon from '~/components/icons/search'
 import SortIcon from '~/components/icons/sortIcon'
-import ProductIGroup from '~/components/product/productIGroup'
-import Auth from '../auth'
 import MenuHomePage from '~/components/product/menuHomePage'
-import Image from 'next/image'
+import ProductIGroup from '~/components/product/productIGroup'
 
 export default function Home() {
   return (
-    <Auth>
-      <main className="flex min-h-screen flex-col items-center justify-between">
-        <div className="max-w-6xl w-full">
-          <Header />
-          <Content />
-        </div>
-      </main>
-    </Auth>
+    <main className="flex min-h-screen flex-col items-center justify-between">
+      <div className="max-w-6xl w-full">
+        <Header />
+        <Content />
+      </div>
+    </main>
   )
 }
 

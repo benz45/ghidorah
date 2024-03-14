@@ -5,9 +5,9 @@ import { usePostMethod } from '../http/methods'
 import { CSRFResponse } from '~/model/CSRFResponse'
 
 
-export function useServiceCustomer(csrf: CSRFResponse | undefined) {
+export function useServiceCustomer() {
 
-  const postCustomer = usePostMethod<CreateCustomerRequest, CustomerResponse>("api/e-commerce-info/customer", axios, csrf)
+  const postCustomer = usePostMethod<CreateCustomerRequest, CustomerResponse>("api/e-commerce-info/customer")
 
   return {
     postCustomer

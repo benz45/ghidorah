@@ -1,20 +1,6 @@
 import { Dialog, Transition } from '@headlessui/react'
-import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
 import React, { Fragment, useRef, useState } from 'react'
-import CustomTextField from '../util/customTextField'
 import FormCreateProductModel from './formCreateProductModal'
-
-const style = {
-  position: 'absolute' as 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 400,
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
-  boxShadow: 24,
-  p: 4
-}
 
 interface CreateProductModalContext {
   setShowModel?: (isShow: boolean) => void

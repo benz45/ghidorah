@@ -7,7 +7,7 @@ const useRoute = <TypeParam>() => {
   const router = useRouter()
 
   const createSearchParams = (params: TypeParam) => {
-    const urlSearchParams = new URLSearchParams(searchParams.toString())
+    const urlSearchParams = new URLSearchParams(searchParams?.toString())
     for (const key in params) {
       urlSearchParams.set(key, params[key] + '')
     }
@@ -24,7 +24,7 @@ const useRoute = <TypeParam>() => {
   }
 
   const get = <T extends keyof TypeParam>(paramName: T) => {
-    const value = searchParams.get(paramName as string)
+    const value = searchParams?.get(paramName as string)
     if (value) {
       return convertStringToShouldType(value)as TypeParam[T]
     }

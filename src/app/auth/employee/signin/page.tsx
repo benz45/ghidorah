@@ -8,12 +8,11 @@ import FormControl from '@mui/material/FormControl'
 import React, { useState } from 'react'
 import { SubmitHandler, useForm, useWatch } from 'react-hook-form'
 import * as yup from 'yup'
-import AuthBusiness from '~/business/authBusiness'
 import CustomTextField from '~/components/util/customTextField'
+import TextHover from '~/components/util/textHover'
 import useRoute from '~/hook/router'
 import AuthPage from '../page'
 import { SearchParamsSignup } from '../signup/page'
-import TextHover from '~/components/util/textHover'
 
 const schema = yup.object({
   email: yup.string().email().required('Email is required'),
@@ -26,7 +25,6 @@ interface MyComponentProps {}
 
 const SigninPage = (props: MyComponentProps) => {
   const [isLoading, setIsLoading] = React.useState(false)
-  const authBusiness = new AuthBusiness()
   const route = useRoute<SearchParamsSignup>()
 
   const [errorMessage, setErrorMessage] = useState<string | undefined>()
@@ -109,10 +107,10 @@ const SigninPage = (props: MyComponentProps) => {
     setIsLoading(true)
     await new Promise(res => setTimeout(res, 2000))
     try {
-      const { data, error } = await authBusiness.signIn(email, password)
-      if (error) {
-        throw new Error(error.message)
-      }
+      // const { data, error } = await authBusiness.signIn(email, password)
+      // if (error) {
+      //   throw new Error(error.message)
+      // }
       route.route('/')
     } catch (error) {
       if (error instanceof Error) {

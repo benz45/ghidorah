@@ -1,5 +1,4 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { CSRFResponse } from '~/model/CSRFResponse'
 import { SigninResponse } from '~/model/auth/signinResponse'
 import axios from '~/service/http'
 
@@ -14,10 +13,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
             .find(cookie => cookie.startsWith('XSRF-TOKEN='))
             ?.split(';')[0]
             ?.split('=')[1]
-          //   .find(cookie => cookie.startsWith('XSRF-TOKEN='))
-          //   .split(';')[0]
-          //   .split('=')[1]
-
           if (xsrfToken) {
             axios.defaults.headers.common['X-XSRF-TOKEN'] = xsrfToken
           }
@@ -38,10 +33,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         Accept: 'application/json',
         'Content-Type': 'application/json',
         'x-xsrf-token': `${req?.headers['x-xsrf-token'] ?? ''}`,
-        // 'Access-Control-Allow-Origin': '*',
-        // 'Access-Control-Allow-Credentials': true,
-        // 'Access-Control-Allow-Methods': 'HEAD, GET, POST, PUT, PATCH, DELETE',
-        // 'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token'
       },
       withCredentials: true
     })
@@ -49,8 +40,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     res.status(200).json(data)
   } catch (error) {
     if (error instanceof Error) {
-      // console.error(error)
-      res.status(400).json({ message: 'error sign in ' })
+      res.status(400).json({ message: error.message })
     }
   }
 }

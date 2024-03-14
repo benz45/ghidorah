@@ -1,33 +1,28 @@
-import React, { useState, Fragment } from "react";
-import ArrowIcon from "../icons/arrow";
-import { Transition, Menu } from "@headlessui/react";
-import AuthBusiness from "~/business/authBusiness";
-import { useRouter } from "next/navigation";
+import { Menu, Transition } from '@headlessui/react'
+import { useRouter } from 'next/navigation'
+import { Fragment, useState } from 'react'
+import ArrowIcon from '../icons/arrow'
 
 function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(" ");
+  return classes.filter(Boolean).join(' ')
 }
 
 export default function MenuHomePage() {
-  const [isShowOption, setIsShowOption] = useState<boolean>(false);
-  const authBusiness = new AuthBusiness();
-  const router = useRouter();
+  const [isShowOption, setIsShowOption] = useState<boolean>(false)
+  const router = useRouter()
 
   const signOut = async () => {
     try {
-      await authBusiness.signOut();
-      router.push("/login");
+      // await authBusiness.signOut();
+      router.push('/login')
     } catch (error) {
-      console.error(error);
+      console.error(error)
     }
-  };
+  }
 
   return (
     <>
-      <div
-        className="flex w-20 items-center cursor-pointer"
-        onClick={() => setIsShowOption((isShow) => !isShow)}
-      >
+      <div className="flex w-20 items-center cursor-pointer" onClick={() => setIsShowOption(isShow => !isShow)}>
         <span className="pl-3 select-none">Guest</span>
         <ArrowIcon width={20} height={20} className="pl-2" fill="black" />
       </div>
@@ -49,8 +44,8 @@ export default function MenuHomePage() {
                   <a
                     href="#"
                     className={classNames(
-                      active ? "bg-gray-100 text-gray-900" : "text-gray-700",
-                      "block px-4 py-2 text-sm select-none"
+                      active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                      'block px-4 py-2 text-sm select-none'
                     )}
                   >
                     Account settings
@@ -62,8 +57,8 @@ export default function MenuHomePage() {
                   <a
                     href="#"
                     className={classNames(
-                      active ? "bg-gray-100 text-gray-900" : "text-gray-700",
-                      "block px-4 py-2 text-sm select-none"
+                      active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                      'block px-4 py-2 text-sm select-none'
                     )}
                   >
                     Support
@@ -75,8 +70,8 @@ export default function MenuHomePage() {
                   <a
                     href="#"
                     className={classNames(
-                      active ? "bg-gray-100 text-gray-900" : "text-gray-700",
-                      "block px-4 py-2 text-sm select-none"
+                      active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                      'block px-4 py-2 text-sm select-none'
                     )}
                   >
                     License
@@ -88,8 +83,8 @@ export default function MenuHomePage() {
                   <a
                     href="#"
                     className={classNames(
-                      active ? "bg-gray-100 text-gray-900" : "text-gray-700",
-                      "block px-4 py-2 text-sm select-none"
+                      active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                      'block px-4 py-2 text-sm select-none'
                     )}
                     onClick={() => signOut()}
                   >
@@ -102,5 +97,5 @@ export default function MenuHomePage() {
         </Transition>
       </Menu>
     </>
-  );
+  )
 }

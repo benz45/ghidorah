@@ -1,16 +1,13 @@
 'use client'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { LoadingButton } from '@mui/lab'
-import { Box, FormControlLabel, FormLabel, Grid, Radio, RadioGroup } from '@mui/material'
+import { Box, Grid } from '@mui/material'
 import FormControl from '@mui/material/FormControl'
 import { useState } from 'react'
 import { SubmitHandler, useForm, useWatch } from 'react-hook-form'
 import * as yup from 'yup'
 import CustomTextField from '~/components/util/customTextField'
-import * as DateConstant from '~/constant/dateConstant'
 import useRoute from '~/hook/router'
-import { CreateCustomerRequest } from '~/model/customer/createCustomerRequest'
-import { CustomerResponse } from '~/model/customer/customerResponse'
 import { useServiceCustomer } from '~/service/reno/useServiceCustomer'
 
 const schema = yup.object({
@@ -28,7 +25,7 @@ export interface SearchParamsSignup {
 }
 
 export default function FormCreateProductModel() {
-  const { postCustomer } = useServiceCustomer(undefined)
+  const { postCustomer } = useServiceCustomer()
 
   const route = useRoute<SearchParamsSignup>()
 
