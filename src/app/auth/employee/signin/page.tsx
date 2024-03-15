@@ -15,6 +15,9 @@ import { useServiceAuth } from '@/service/reno/useServiceAuth'
 import { AxiosError } from 'axios'
 import AuthEmployeePage from '@/app/auth/employee/page'
 import { SearchParamsSignup } from '@/app/auth/employee/signup/page'
+import { useDispatch } from 'react-redux'
+import { AppDispatch } from '@/redux/store'
+import { setUser } from '@/redux/reducers/auth.reducer'
 
 const schema = yup.object({
   username: yup.string().required('Username is required'),
@@ -29,7 +32,7 @@ const AuthEmployeeSigninPage = () => {
   const { signin } = useServiceAuth()
   const [errorMessage, setErrorMessage] = useState<string | undefined>()
   const isSignupSuccess = route.get('isSignupSuccess')
-
+  const dispatch = useDispatch<AppDispatch>()
   const {
     register,
     handleSubmit,
@@ -106,6 +109,7 @@ const AuthEmployeeSigninPage = () => {
     await new Promise(res => setTimeout(res, 2000))
     try {
       const response = await signin.trigger({ username, password })
+      dispatch(setUser(response))
       localStorage.setItem('AUTH', JSON.stringify(response))
       route.to('/product/employee')
     } catch (error) {

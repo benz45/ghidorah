@@ -19,6 +19,7 @@ import TabSelectPagesControl, {
   TabSelectPagesControlContext,
   TabSelectPagesControlProps
 } from '@/components/home/tabSelectPagesControl'
+import { useAppSelector } from '@/redux/store'
 
 export interface RouteParamHomePage {
   TabSelectinitialIndex?: number
@@ -107,7 +108,12 @@ function PageOptions(props: { children: React.ReactNode }) {
 
 function PageLabel() {
   const context = useContext(TabSelectPagesControlContext)
-  return <div className="text-3xl font-bold">{context.currentTab?.label}</div>
+  const userName = useAppSelector(state => state.authReducer.user.username)
+  return (
+    <div className="text-3xl font-bold">
+      {context.currentTab?.label} {userName}
+    </div>
+  )
 }
 
 function PageSearch() {
