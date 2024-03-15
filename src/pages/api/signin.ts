@@ -24,7 +24,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         return Promise.reject(error)
       }
     )
-    console.log(req.body)
     const response = await axios.post<SigninResponse>('api/auth/signin', req.body, {
       xsrfCookieName: 'XSRF-TOKEN',
       xsrfHeaderName: 'X-XSRF-TOKEN',

@@ -7,10 +7,11 @@ import TabSelectPagesControl, { TabSelectPagesControlContext } from '@/component
 import CustomList, { CustomListValueProps } from '@/components/util/customList'
 import { StorePageParams } from '@/hook/routeParams'
 import useRoute from '@/hook/router'
-import { useServiceProduct, useWatcherService } from '@/service/reno/useServiceProduct'
+import { useServiceProduct } from '@/service/reno/useServiceProduct'
 import StoreItem from '@/components/store/allStorePage/storeItem'
 import ContentCreateStore from '@/components/store/createStore/contentCreateStore'
 import TabHeaderSelectPages from '@/components/store/header/tabHeaderSelectPages'
+import { useWatcherService } from '@/service/http/methods'
 
 export default function StoreManagement() {
   const { getProduct } = useServiceProduct()

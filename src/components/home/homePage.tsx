@@ -10,7 +10,7 @@ import SearchIcon from '@mui/icons-material/Search'
 import StorefrontIcon from '@mui/icons-material/Storefront'
 import { TabContext, TabList, TabPanel } from '@mui/lab'
 import { Box, Grid, Tab } from '@mui/material'
-import { useServiceProduct, useWatcherService } from '@/service/reno/useServiceProduct'
+import { useServiceProduct } from '@/service/reno/useServiceProduct'
 import CustomizedMenus from '@/components/util/customMeno'
 import useRoute from '@/hook/router'
 import { Each } from '@/util/util'
@@ -20,6 +20,7 @@ import TabSelectPagesControl, {
   TabSelectPagesControlProps
 } from '@/components/home/tabSelectPagesControl'
 import { useAppSelector } from '@/redux/store'
+import { useWatcherService } from '@/service/http/methods'
 
 export interface RouteParamHomePage {
   TabSelectinitialIndex?: number
@@ -28,7 +29,6 @@ export default function HomePage() {
   const { getProduct } = useServiceProduct()
   const { data } = useWatcherService(getProduct)
   const route = useRoute<RouteParamHomePage>()
-  console.log(data)
   return (
     <TabSelectPagesControl
       labels={['Products', 'Order', 'Table View', 'Pay Later View']}

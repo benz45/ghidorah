@@ -1,11 +1,11 @@
 'use client'
-import Image from 'next/image'
 import CategoryItem from '@/components/categoryItem'
 import CartIcon from '@/components/icons/cart'
 import SearchIcon from '@/components/icons/search'
 import SortIcon from '@/components/icons/sortIcon'
 import MenuHomePage from '@/components/product/menuHomePage'
 import ProductIGroup from '@/components/product/productIGroup'
+import Image from 'next/image'
 
 export default function ProductCustomerPage() {
   return (
