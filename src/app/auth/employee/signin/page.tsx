@@ -111,7 +111,7 @@ const AuthEmployeeSigninPage = () => {
       const response = await signin.trigger({ username, password })
       dispatch(setUser(response))
       localStorage.setItem('AUTH', JSON.stringify(response))
-      route.to('/product/employee')
+      route.to('/product/employee', { userId: response.id })
     } catch (error) {
       if (error instanceof AxiosError) {
         if (error.code === AxiosError.ERR_BAD_REQUEST) {

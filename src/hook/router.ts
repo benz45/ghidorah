@@ -1,4 +1,4 @@
-import { StorePageParams } from '@/hook/routeParams'
+import { ProductCustomerPageParams, ProductEmployeePageParams, StorePageParams } from '@/hook/routeParams'
 import { convertStringToShouldType } from '@/util/util'
 import { useRouter, useSearchParams } from 'next/navigation'
 
@@ -10,8 +10,8 @@ export const PATHS = {
   EMPLOYEE_SIGNIN: {path:'/auth/employee/signin', params:{}},
   EMPLOYEE_SIGNUP: {path:'/auth/employee/signup', params:{}},
   STORE: {path:'/store', params: {} as StorePageParams},
-  CUSTOMER_PRODUCT: {path:'/product/customer', params:{}},
-  EMPLOYEE_PRODUCT: {path:'/product/employee', params:{}}
+  CUSTOMER_PRODUCT: {path:'/product/customer', params:{} as ProductCustomerPageParams},
+  EMPLOYEE_PRODUCT: {path:'/product/employee', params:{} as ProductEmployeePageParams}
 } as const
 
 

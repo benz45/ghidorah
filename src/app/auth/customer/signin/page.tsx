@@ -109,7 +109,7 @@ function AuthCustomerSigninPage() {
     try {
       const response = await signin.trigger({ username, password })
       localStorage.setItem('AUTH', JSON.stringify(response))
-      route.to('/product/customer')
+      route.to('/product/customer', { userId: response.id })
     } catch (error) {
       if (error instanceof AxiosError) {
         if (error.code === AxiosError.ERR_BAD_REQUEST) {
