@@ -10,10 +10,13 @@ import { SignupRequest } from "@/model/auth/signupRequest"
 import { SignupResponse } from "@/model/auth/signupResponse"
 import { CreateStoreResponse } from "@/model/store/createStoreResponse"
 import { CreateStoreRequest } from "@/model/store/createStoreRequest"
+import { EmployeeResponse } from "@/model/employee/employeeResponse"
+import { EmployeeRequestPath } from "@/model/employee/employeeRequest"
 
 export interface ApiGetPath {
   'api/csrf-token': [CSRFResponse],
-  'api/e-commerce-info/product': [ProductPageResponse]
+  'api/e-commerce-info/product': [ProductPageResponse],
+  'api/e-commerce-info/employee/user/{userId}': [EmployeeResponse, EmployeeRequestPath]
 }
 
 export interface ApiPostPath {
@@ -25,6 +28,7 @@ export interface ApiPostPath {
 }
 
 export type ApiGetResponse <T extends keyof ApiGetPath> = ApiGetPath[T][0]
+export type ApiGetRequest <T extends keyof ApiGetPath> = ApiGetPath[T][1]
 export type ApiPostResponse <T extends keyof ApiPostPath> = ApiPostPath[T][0]
 export type ApiPostRequest <T extends keyof ApiPostPath> = ApiPostPath[T][1]
 
