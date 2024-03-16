@@ -1,4 +1,10 @@
 'use client'
+import CustomButton from '@/components/util/customButton'
+import CustomTextField from '@/components/util/customTextField'
+import InputImageUpload from '@/components/util/inputImageUpload'
+import useRoute from '@/hook/router'
+import { useAppSelector } from '@/redux/store'
+import { useServiceStore } from '@/service/reno/useServiceStore'
 import { yupResolver } from '@hookform/resolvers/yup'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import { Box, Grid } from '@mui/material'
@@ -6,11 +12,6 @@ import FormControl from '@mui/material/FormControl'
 import React, { ChangeEvent, useState } from 'react'
 import { SubmitHandler, useForm, useWatch } from 'react-hook-form'
 import * as yup from 'yup'
-import CustomButton from '@/components/util/customButton'
-import CustomTextField from '@/components/util/customTextField'
-import InputImageUpload from '@/components/util/inputImageUpload'
-import useRoute from '@/hook/router'
-import { useServiceStore } from '@/service/reno/useServiceStore'
 
 const schema = yup.object({
   storeName: yup.string().min(3).max(50).required('Name is required'),
@@ -20,7 +21,7 @@ const schema = yup.object({
   subdistrict: yup.string().required('Subdistrict is required'),
   district: yup.string().required('District is required'),
   province: yup.string().required('Province is required'),
-  postalcode: yup.number().required('Province code is required')
+  postalcode: yup.number().typeError('Amount must be a number').required('Province code is required')
 })
 
 type CreateStoreSchema = yup.InferType<typeof schema>
@@ -33,11 +34,12 @@ export interface SearchParamsSignup {
 interface ContentCreateStoreProps {
   activeId: number
   onPrevious: () => void
+  onNext: () => void
 }
 
 export default function ContentCreateStore(props: ContentCreateStoreProps) {
-  const { postStore } = useServiceStore()
-
+  const { postStoreEmployee } = useServiceStore()
+  const employeeId = useAppSelector(store => store.employeeReducer.employee?.id)
   const route = useRoute<SearchParamsSignup>()
 
   const [errorMessage, setErrorMessage] = useState<string | undefined>()
@@ -66,6 +68,12 @@ export default function ContentCreateStore(props: ContentCreateStoreProps) {
     const onChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       param.onSetValue(param.registerType, e)
     }
+    const getValue = () => {
+      if (param.inputType == 'number') {
+        return param.value
+      }
+      return param.value ?? ''
+    }
     return (
       <CustomTextField
         className="w-full flex"
@@ -74,7 +82,7 @@ export default function ContentCreateStore(props: ContentCreateStoreProps) {
         label={param.label}
         placeholder={`Please enter you ${param.label.toLowerCase()}`}
         type={param.inputType}
-        value={param.value ?? ''}
+        value={getValue()}
         onChange={e => onChange(e)}
         error={param.isError}
         multiline={!!param.rows}
@@ -134,7 +142,7 @@ export default function ContentCreateStore(props: ContentCreateStoreProps) {
     postalcode: renderInput({
       registerType: 'postalcode',
       label: 'Postal Code',
-      inputType: 'number',
+      inputType: 'text',
       value: values.postalcode,
       onSetValue: (t, e) => setValue(t, +e.target.value),
       isError: !!errors.postalcode,
@@ -168,8 +176,8 @@ export default function ContentCreateStore(props: ContentCreateStoreProps) {
 
   const onSubmit: SubmitHandler<CreateStoreSchema> = async data => {
     try {
-      postStore.trigger({
-        employeeId: 1,
+      if (!employeeId) throw new Error('Customer not found.')
+      postStoreEmployee.trigger({
         storeName: data.storeName,
         detail: data.detail ?? '',
         address: {
@@ -179,6 +187,9 @@ export default function ContentCreateStore(props: ContentCreateStoreProps) {
           province: data.province,
           postalcode: data.postalcode,
           tal: data.phoneNumber
+        },
+        path: {
+          employeeId
         }
       })
     } catch (error) {
@@ -214,7 +225,7 @@ export default function ContentCreateStore(props: ContentCreateStoreProps) {
               </Grid>
               <Grid item xs={12}>
                 <div className="flex w-full justify-end">
-                  <CustomButton text="Next" />
+                  <CustomButton text="Next" onClick={props.onNext} />
                 </div>
               </Grid>
             </>
@@ -249,9 +260,12 @@ export default function ContentCreateStore(props: ContentCreateStoreProps) {
           )}
           {props.activeId === 3 && (
             <Grid item xs={12}>
-              <div className="flex items-center justify-center">
-                <div className="text-4xl text-primary text-semibold pr-4">Completed</div>
-                <CheckCircleIcon sx={{ fontSize: '40px' }} className="text-primary" />
+              <div className="flex flex-col w-full justify-center items-center h-full">
+                <div className="flex items-center justify-center pt-20">
+                  <div className="text-4xl text-primary text-semibold pr-4 ">Completed</div>
+                  <CheckCircleIcon sx={{ fontSize: '40px' }} className="text-primary" />
+                </div>
+                <span className="text-lg pt-4 text-gray-400">Create you store successfully</span>
               </div>
             </Grid>
           )}

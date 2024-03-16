@@ -1,10 +1,12 @@
 import authReducer from '@/redux/reducers/auth.reducer'
+import employeeReducer from '@/redux/reducers/employee.reducer'
 import { configureStore } from '@reduxjs/toolkit'
 import { TypedUseSelectorHook, useSelector } from 'react-redux'
 
 export const store = configureStore({
   reducer: {
-    authReducer
+    authReducer,
+    employeeReducer,
   },
   devTools: process.env.NEXT_PUBLIC_NODE_ENV !== 'production'
 })

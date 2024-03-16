@@ -1,5 +1,4 @@
 export interface CreateStoreRequest {
-  employeeId:  number;
   storeName:   string;
   detail:      string;
   storeImages?: StoreImage[];

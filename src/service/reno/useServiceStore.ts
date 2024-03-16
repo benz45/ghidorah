@@ -3,8 +3,10 @@ import { usePostMethod } from '@/service/http/methods'
 
 
 export function useServiceStore() {
-  const postStore = usePostMethod("api/e-commerce-info/store")
+  const postStoreCustomer = usePostMethod("api/e-commerce-info/store/customer/{customerId}")
+  const postStoreEmployee = usePostMethod("api/e-commerce-info/store/employee/{employeeId}")
   return {
-    postStore: postStore
+    postStoreCustomer,
+    postStoreEmployee
   }
 }

@@ -14,6 +14,7 @@ export interface CustomListValueProps {
 }
 
 export interface CustomListProps {
+  disableElements?: number[]
   currentActive: CustomListValueProps
   isShowNumberOfList?: boolean
   values: CustomListValueProps[]
@@ -22,6 +23,7 @@ export interface CustomListProps {
 
 export default function CustomList(props: CustomListProps) {
   const [currentActive, setCurrentActive] = React.useState(props.currentActive)
+  const [disableElements, setDisableElements] = React.useState<{ [Key in number]: true }>({})
   const count = props.values.length
   const onChange = (event: CustomListValueProps) => {
     setCurrentActive(event)
@@ -30,6 +32,14 @@ export default function CustomList(props: CustomListProps) {
   React.useEffect(() => {
     setCurrentActive(props.currentActive)
   }, [props.currentActive])
+
+  React.useEffect(() => {
+    const tmpDisableElements: { [Key in number]: true } = {}
+    props.disableElements?.forEach(elem => {
+      tmpDisableElements[elem] = true
+    })
+    setDisableElements(tmpDisableElements)
+  }, [])
   return (
     <Box sx={{ width: '100%', bgcolor: 'background.paper' }}>
       <nav>
@@ -38,7 +48,16 @@ export default function CustomList(props: CustomListProps) {
             values={props.values}
             render={(elem, index) => (
               <React.Fragment key={'list_' + index}>
-                <ListItem disablePadding sx={{ height: 80 }} onClick={() => onChange(elem)} disableGutters>
+                <ListItem
+                  disablePadding
+                  sx={{ height: 80 }}
+                  onClick={() => {
+                    if (!disableElements[index]) {
+                      onChange(elem)
+                    }
+                  }}
+                  disableGutters
+                >
                   <ListItemButton component="a" href={elem.href}>
                     <ListItemText>
                       <div
