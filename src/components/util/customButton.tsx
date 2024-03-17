@@ -5,7 +5,9 @@ export default function CustomButton(props: {
   text: string
   type?: 'button' | 'reset' | 'submit'
   variant?: 'sorf' | 'contained'
+  className?: string
   onClick?: () => void
+  size?: 'sm' | 'lg' | 'xl'
 }) {
   let className =
     'rounded-lg p-4 font-semibold focus:ring-offset-2 focus:ring-2 min-w-32 transition duration-300 ease-in-out'
@@ -15,10 +17,14 @@ export default function CustomButton(props: {
     className = `${className} bg-primary-50 text-primary hover:bg-primary-70 focus:ring-primary-100`
   }
   return (
-    <Stack spacing={2} direction="row">
-      <button type={props.type ?? 'button'} className={className} onClick={() => props.onClick?.()}>
-        {props.text}
-      </button>
-    </Stack>
+    <button
+      type={props.type ?? 'button'}
+      className={`${className} ${props.className}`}
+      onClick={() => props.onClick?.()}
+    >
+      {props.text}
+    </button>
+    // <Stack spacing={2} direction="row">
+    // </Stack>
   )
 }

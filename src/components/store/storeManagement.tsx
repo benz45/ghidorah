@@ -12,7 +12,6 @@ export default function StoreManagement() {
         <div className="flex w-full justify-between">
           <div className="text-3xl font-bold">Store Management</div>
         </div>
-        <Searchinput />
         <StoreContent />
       </div>
     </TabSelectPagesControl>

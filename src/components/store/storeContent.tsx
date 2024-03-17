@@ -1,7 +1,9 @@
 'use client'
-import CreateStoreSelector from '@/components/store/createStore/createStoreSelector'
+import SearchInput from '@/components/searchInput'
+import ContentCreateStore from '@/components/store/createStore/contentCreateStore'
 import StoreDetailBox from '@/components/store/storePage/storeDetailBox'
 import StoreItemLoading from '@/components/store/storePage/storeItemLoading'
+import CustomButton from '@/components/util/customButton'
 import { RendomComponent } from '@/components/util/rendomComponent'
 import { StorePageParams } from '@/hook/routeParams'
 import useRoute from '@/hook/router'
@@ -44,6 +46,12 @@ export default function StoreContent() {
           </TabList>
         </Box>
         <TabPanel value="1">
+          <div className="pb-6 flex w-full items-start justify-between">
+            <SearchInput />
+            <div className="block">
+              <CustomButton text="Create Store" />
+            </div>
+          </div>
           <ToggleComponent
             toggle={getStoreEmployeePage.isLoading}
             begin={
@@ -79,7 +87,7 @@ export default function StoreContent() {
           />
         </TabPanel>
         <TabPanel value="2" sx={{ padding: 0, paddingTop: 4 }}>
-          <CreateStoreSelector />
+          <ContentCreateStore />
         </TabPanel>
         <TabPanel value="3">To go</TabPanel>
       </TabContext>

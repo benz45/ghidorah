@@ -31,11 +31,7 @@ export interface SearchParamsSignup {
   isSignupSuccess?: boolean
 }
 
-interface ContentCreateStoreProps {
-  activeId: number
-  onPrevious: () => void
-  onNext: () => void
-}
+interface ContentCreateStoreProps {}
 
 export default function ContentCreateStore(props: ContentCreateStoreProps) {
   const { postStoreEmployee } = useServiceStore()
@@ -206,71 +202,62 @@ export default function ContentCreateStore(props: ContentCreateStoreProps) {
     route.to('/auth', { email, isSignupSuccess })
   }
   return (
-    <FormControl onSubmit={handleSubmit(onSubmit)} className="flex w-full">
-      {errorBox()}
-      <Box component="form" autoComplete="off" className="flex-grow w-full">
-        <Grid container spacing={2}>
-          {props.activeId === 1 && (
-            <>
-              <Grid item xs={12}>
-                <div className="flex">
-                  <div className="flex pb-6 pr-6">
-                    <InputImageUpload />
-                  </div>
-                  <div className="flex flex-col w-full">
-                    <div className="pb-6">{objInput.storeName}</div>
-                    <div className="">{objInput.detail}</div>
-                  </div>
-                </div>
-              </Grid>
-              <Grid item xs={12}>
-                <div className="flex w-full justify-end">
-                  <CustomButton text="Next" onClick={props.onNext} />
-                </div>
-              </Grid>
-            </>
-          )}
-          {props.activeId === 2 && (
-            <>
-              <Grid item xs={6}>
-                {objInput.houseNumber}
-              </Grid>
-              <Grid item xs={6}>
-                {objInput.subdistrict}
-              </Grid>
-              <Grid item xs={6}>
-                {objInput.district}
-              </Grid>
-              <Grid item xs={6}>
-                {objInput.province}
-              </Grid>
-              <Grid item xs={6}>
-                {objInput.postalcode}
-              </Grid>
-              <Grid item xs={6}>
-                {objInput.phoneNumber}
-              </Grid>
-              <Grid item xs={12}>
-                <div className="flex w-full justify-between">
-                  <CustomButton text="Previous" variant="sorf" onClick={() => props.onPrevious()} />
-                  <CustomButton type="submit" text="Confirm" />
-                </div>
-              </Grid>
-            </>
-          )}
-          {props.activeId === 3 && (
+    <div className="flex bg-white w-full justify-center rounded-lg">
+      <div className="block 3xl:w-1/2 xl:w-1/2 md:w-1/2 lg:w-1/2 sm:w-1/2 p-12">
+        <div className="flex w-full">
+          <FormControl onSubmit={handleSubmit(onSubmit)} className="flex w-full">
+            {errorBox()}
             <Grid item xs={12}>
-              <div className="flex flex-col w-full justify-center items-center h-full">
-                <div className="flex items-center justify-center pt-20">
-                  <div className="text-4xl text-primary text-semibold pr-4 ">Completed</div>
-                  <CheckCircleIcon sx={{ fontSize: '40px' }} className="text-primary" />
-                </div>
-                <span className="text-lg pt-4 text-gray-400">Create you store successfully</span>
+              <div className="flex flex-col items-center w-full h-full pb-8">
+                <div className="text-4xl text-primary font-semibold pr-4 ">Create Store</div>
+                <span className="text-lg pt-2 text-gray-400">
+                  Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                </span>
               </div>
             </Grid>
-          )}
-        </Grid>
-      </Box>
-    </FormControl>
+            <Box component="form" autoComplete="off" className="flex-grow w-full">
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <div className="flex">
+                    <div className="flex flex-col items-center pb-6 pr-6">
+                      <InputImageUpload />
+                      <div className="pt-2 text-primary">Upload image</div>
+                    </div>
+                    <div className="flex flex-col w-full">
+                      <div className="pb-6">{objInput.storeName}</div>
+                      <div className="">{objInput.detail}</div>
+                    </div>
+                  </div>
+                </Grid>
+                <Grid item xs={6}>
+                  {objInput.houseNumber}
+                </Grid>
+                <Grid item xs={6}>
+                  {objInput.subdistrict}
+                </Grid>
+                <Grid item xs={6}>
+                  {objInput.district}
+                </Grid>
+                <Grid item xs={6}>
+                  {objInput.province}
+                </Grid>
+                <Grid item xs={6}>
+                  {objInput.postalcode}
+                </Grid>
+                <Grid item xs={6}>
+                  {objInput.phoneNumber}
+                </Grid>
+                <Grid item xs={12}>
+                  <div className="flex w-full justify-between">
+                    <CustomButton text="Previous" variant="sorf" />
+                    <CustomButton type="submit" text="Confirm" className="w-full ml-4" />
+                  </div>
+                </Grid>
+              </Grid>
+            </Box>
+          </FormControl>
+        </div>
+      </div>
+    </div>
   )
 }

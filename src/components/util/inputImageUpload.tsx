@@ -2,6 +2,9 @@ import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate'
 import Button from '@mui/material/Button'
 import { styled } from '@mui/material/styles'
 import React from 'react'
+import FilterCenterFocusIcon from '@mui/icons-material/FilterCenterFocus'
+import FilterHdrIcon from '@mui/icons-material/FilterHdr'
+import PhotoCameraIcon from '@mui/icons-material/PhotoCamera'
 const VisuallyHiddenInput = styled('input')({
   clip: 'rect(0 0 0 0)',
   clipPath: 'inset(50%)',
@@ -20,11 +23,11 @@ export default function InputImageUpload() {
       component="label"
       role={undefined}
       variant="outlined"
-      className="h-36 w-36"
+      className="h-36 w-36 rounded-lg"
       tabIndex={-1}
-      sx={{ border: 2 }}
+      sx={{ border: 2, borderRadius: 4 }}
     >
-      <AddPhotoAlternateIcon />
+      <PhotoCameraIcon />
       <VisuallyHiddenInput type="file" />
     </Button>
   )
