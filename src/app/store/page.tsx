@@ -1,7 +1,7 @@
 'use client'
 import HocGetEmployee from '@/components/employee/hocGetEmployee'
 import LeftMenuBar from '@/components/home/leftMenuBar'
-import CreateStorePage from '@/components/store/storeManagement'
+import StoreManagement from '@/components/store/storeManagement'
 
 export default function StorePage() {
   return (
@@ -9,7 +9,7 @@ export default function StorePage() {
       <main className="flex min-h-screen">
         <div className="w-full flex bg-primary-light">
           <LeftMenuBar />
-          <CreateStorePage />
+          <StoreManagement />
         </div>
       </main>
     </HocGetEmployee>
