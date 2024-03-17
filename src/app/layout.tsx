@@ -6,6 +6,7 @@ import '@/app/globals.css'
 import { Theme } from '@/app/theme'
 import CsrfComponent from '@/components/csrfComponent'
 import { ReduxProvider } from '@/redux/provider'
+import Interceptors from '@/service/http/interceptors'
 
 export const metadata: Metadata = {
   title: 'Brugge',
@@ -19,7 +20,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <html lang="en">
           <Theme>
             <body className={`${sansita_swashed.variable} ${montserrat.className}`}>
-              <AppRouterCacheProvider>{children}</AppRouterCacheProvider>
+              <Interceptors>
+                <AppRouterCacheProvider>{children}</AppRouterCacheProvider>
+              </Interceptors>
             </body>
           </Theme>
         </html>

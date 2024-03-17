@@ -108,8 +108,8 @@ axios.interceptors.response.use(
           return axios(originalRequest)
         }
       } catch (err) {
-        localStorage.removeItem(LOCAL_STORAGE_AUTH_KEY)
-        location.href = PATHS.AUTHORIZATION.path
+        // localStorage.removeItem(LOCAL_STORAGE_AUTH_KEY)
+        // location.href = PATHS.AUTHORIZATION.path
       }
     }
 

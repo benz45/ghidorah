@@ -142,7 +142,7 @@ export default function ContentCreateStore(props: ContentCreateStoreProps) {
     postalcode: renderInput({
       registerType: 'postalcode',
       label: 'Postal Code',
-      inputType: 'text',
+      inputType: 'number',
       value: values.postalcode,
       onSetValue: (t, e) => setValue(t, +e.target.value),
       isError: !!errors.postalcode,

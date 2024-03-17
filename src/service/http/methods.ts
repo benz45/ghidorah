@@ -27,7 +27,6 @@ export function usePostMethod<T extends keyof ApiPostPath>(url: T) {
         }
       }
       delete options.arg.path
-      console.log(_url, options.arg)
       const response = await axios.post<ApiPostResponse<typeof url>>(_url, options.arg)
       return response.data
     }
