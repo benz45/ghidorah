@@ -1,6 +1,7 @@
 import {
   ApiGetPath,
   ApiGetRequest,
+  ApiGetRequestParams,
   ApiGetResponse,
   ApiPostPath,
   ApiPostRequest,
@@ -8,6 +9,7 @@ import {
   ApiPostResponse
 } from '@/service/api/api'
 import axios from '@/service/http/index'
+import { convertToRequestParams } from '@/util/util'
 import React from 'react'
 import useSWR from 'swr'
 import useSWRMutation, { TriggerWithArgs, TriggerWithoutArgs } from 'swr/mutation'
@@ -65,7 +67,7 @@ export function useGetMethod<T extends keyof ApiGetPath>(url: T) {
 export function useGetTriggerMethod<T extends keyof ApiGetPath>(url: T) {
   const { data, trigger, isMutating, error } = useSWRMutation(
     url as string,
-    async (key, options: { arg: ApiGetRequest<T> }) => {
+    async (key, options: { arg: ApiGetRequest<typeof url> }) => {
       let _url = key
       if (options.arg) {
         let _request = options.arg as {
@@ -87,10 +89,28 @@ export function useGetTriggerMethod<T extends keyof ApiGetPath>(url: T) {
   }
 }
 
+export function useGetTriggerWithParamsMethod<T extends keyof ApiGetPath>(url: T) {
+  const { data, trigger, isMutating, error } = useSWRMutation(
+    url as string,
+    async (key, options: { arg: ApiGetRequestParams<T> }) => {
+      let _url = key
+      if (options.arg) {
+        _url += `?${convertToRequestParams(options.arg)}`
+      }
+      const response = await axios.get<ApiGetResponse<typeof url>>(_url)
+      return response.data
+    }
+  )
+  return {
+    data,
+    trigger,
+    isLoading: isMutating,
+    error
+  }
+}
+
 export function useWatcherService<
-  T extends { trigger: <R>(r: R) => void },
-  Request extends ReturnType<typeof useGetTriggerMethod>
->(swr: T, request?: Parameters<Request['trigger']>[0]) {
+  T extends { trigger: <R>(r: R) => void }>(swr: T, request?: Parameters<T['trigger']>[0]) {
   React.useEffect(() => {
     swr?.trigger(request)
   }, [])

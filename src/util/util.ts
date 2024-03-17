@@ -35,3 +35,31 @@ export function Each<ValueType, RenderType extends (element: ValueType, index: n
   }
   return Children.toArray(props.values?.map((_elem, index) => props.render(_elem, index)))
 }
+
+export function ToggleComponent (props: {
+  toggle: boolean,
+  begin: React.ReactNode,
+  then: React.ReactNode,
+}) {
+  if (props.toggle) {
+    return props.begin
+  }
+  return props.then
+}
+
+/**
+ * e.g. @return key=value&key=value
+ */
+export const convertToRequestParams = <T>(params: T): string => {
+  let _params = ''
+  if (params) {
+    let generateParams: URLSearchParams = new URLSearchParams()
+    Object.keys(params).forEach(key => {
+      if (params[key as keyof T] !== undefined) {
+        generateParams.set(key, `${params[key as keyof T]}`)
+      }
+    })
+    return (_params += generateParams)
+  }
+  return _params
+}

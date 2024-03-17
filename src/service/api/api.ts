@@ -13,10 +13,14 @@ import { CreateStoreRequest } from "@/model/store/createStoreRequest"
 import { EmployeeResponse } from "@/model/employee/employeeResponse"
 import { EmployeeRequestPath } from "@/model/employee/employeeRequest"
 import { CreateStoreEmployeeRequestPath } from "@/model/store/createStoreEmployeeRequestPath"
+import { PageResponse } from "@/model/page/pageResponse"
+import { StoreEmployeePageResponse } from "@/model/store/storeEmployeePageResponse"
+import { StoreEmployeePageParams } from "@/model/store/storeEmployeePageParams"
 
 export interface ApiGetPath {
   'api/csrf-token': [CSRFResponse],
   'api/e-commerce-info/product': [ProductPageResponse],
+  'api/e-commerce-info/store/employee': [PageResponse<StoreEmployeePageResponse>, {}, StoreEmployeePageParams],
   'api/e-commerce-info/employee/user/{userId}': [EmployeeResponse, EmployeeRequestPath]
 }
 
@@ -31,6 +35,7 @@ export interface ApiPostPath {
 
 export type ApiGetResponse <T extends keyof ApiGetPath> = ApiGetPath[T][0]
 export type ApiGetRequest <T extends keyof ApiGetPath> = ApiGetPath[T][1]
+export type ApiGetRequestParams <T extends keyof ApiGetPath> = ApiGetPath[T][2]
 export type ApiPostResponse <T extends keyof ApiPostPath> = ApiPostPath[T][0]
 export type ApiPostRequest <T extends keyof ApiPostPath> = ApiPostPath[T][1]
 export type ApiPostRequestPath <T extends keyof ApiPostPath> = ApiPostPath[T][2]
