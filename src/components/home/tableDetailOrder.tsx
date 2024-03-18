@@ -6,7 +6,7 @@ import RemoveIcon from '@mui/icons-material/Remove'
 
 export default function TableDetailOrder() {
   return (
-    <div className="bg-white flex flex-col justify-between lg:w-2/5 md:w-2/3">
+    <div className="bg-white flex flex-col justify-between lg:w-2/5 md:w-2/3 rounded-lg">
       <div className="p-6">
         <div className="px-4 py-2 bg-primary text-white font-bold text-lg rounded-lg">Table No.</div>
         <div className="px-4 py-2 mt-4 bg-gray-100 text-gray-500 font-bold text-lg rounded-lg">Name</div>
@@ -17,7 +17,7 @@ export default function TableDetailOrder() {
         </div>
         <TableOrders />
       </div>
-      <div className="p-6 bg-gray-100">
+      <div className="p-6 border-t-2">
         <div className="flex justify-between">
           <div>Sub total</div>
           <div>$1000</div>

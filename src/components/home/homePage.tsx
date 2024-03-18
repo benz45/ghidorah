@@ -1,5 +1,5 @@
 'use client'
-import React, { useContext } from 'react'
+import React from 'react'
 
 import AddIcon from '@mui/icons-material/Add'
 import CloseIcon from '@mui/icons-material/Close'
@@ -7,62 +7,45 @@ import EditIcon from '@mui/icons-material/Edit'
 import PrintIcon from '@mui/icons-material/Print'
 import SearchIcon from '@mui/icons-material/Search'
 
-import StorefrontIcon from '@mui/icons-material/Storefront'
-import { TabContext, TabList, TabPanel } from '@mui/lab'
-import { Box, Grid, Tab } from '@mui/material'
-import { useServiceProduct } from '@/service/reno/useServiceProduct'
-import CustomizedMenus from '@/components/util/customMeno'
-import useRoute from '@/hook/router'
-import { Each } from '@/util/util'
 import CreateProductModal, { CreateProductModalContext } from '@/components/home/createProductModal'
-import TabSelectPagesControl, {
-  TabSelectPagesControlContext,
-  TabSelectPagesControlProps
-} from '@/components/home/tabSelectPagesControl'
+import CustomizedMenus from '@/components/util/customMeno'
 import { useAppSelector } from '@/redux/store'
 import { useWatcherService } from '@/service/http/methods'
+import { useServiceProduct } from '@/service/reno/useServiceProduct'
+import { TabContext, TabList, TabPanel } from '@mui/lab'
+import { Box, Grid, Tab } from '@mui/material'
 
-export interface RouteParamHomePage {
-  TabSelectinitialIndex?: number
-}
 export default function HomePage() {
   const { getProduct } = useServiceProduct()
   const { data } = useWatcherService(getProduct)
-  const route = useRoute<RouteParamHomePage>()
   return (
-    <TabSelectPagesControl
-      labels={['Products', 'Order', 'Table View', 'Pay Later View']}
-      initialPage={route.get('TabSelectinitialIndex') ?? 0}
-    >
-      <TabSelectPages />
-      <PageContainer>
-        <Page page={1}>
-          <PageHeader>
-            <CreateProductModal>
-              <PageLabel />
-              <ProductPageOptions />
-            </CreateProductModal>
-          </PageHeader>
-          <PageSearch />
-          <PageContent />
-        </Page>
-        <Page page={2}>
-          <PageLabel />
-          <PageSearch />
-          <PageContent />
-        </Page>
-        <Page page={3}>
-          <PageLabel />
-          {/* <PageSearch /> */}
-          <PageContent />
-        </Page>
-        <Page page={4}>
-          <PageLabel />
-          <PageSearch />
-          {/* <PageContent /> */}
-        </Page>
-      </PageContainer>
-    </TabSelectPagesControl>
+    <div className="flex w-full">
+      <Page pageId={1}>
+        <PageHeader>
+          <CreateProductModal>
+            <PageLabel />
+            <ProductPageOptions />
+          </CreateProductModal>
+        </PageHeader>
+        <PageSearch />
+        <PageContent />
+      </Page>
+      <Page pageId={2}>
+        <PageLabel />
+        <PageSearch />
+        <PageContent />
+      </Page>
+      <Page pageId={3}>
+        <PageLabel />
+        {/* <PageSearch /> */}
+        <PageContent />
+      </Page>
+      <Page pageId={4}>
+        <PageLabel />
+        <PageSearch />
+        {/* <PageContent /> */}
+      </Page>
+    </div>
   )
 }
 
@@ -84,19 +67,13 @@ function ProductPageOptions() {
   )
 }
 
-function PageContainer(props: TabSelectPagesControlProps & { children: React.ReactNode }) {
-  return <div className="w-full p-10">{props.children}</div>
-}
-
-function Page(props: { children: React.ReactNode } & { page: number }) {
-  const [isLoading, setIsLoading] = React.useState(true)
-  const context = useContext(TabSelectPagesControlContext)
-  const index = props.page - 1
-  React.useEffect(() => {}, [])
-  //   if (isLoading) {
-  //     return <></>
-  //   }
-  return <div className={`${context.currentTab?.index !== index ? ` hidden` : ''}`}>{props.children}</div>
+function Page(props: { children: React.ReactNode } & { pageId: number }) {
+  const { headerLabelSelected } = useAppSelector(store => store.baseLayoutReducer)
+  return (
+    <div className={`${headerLabelSelected?.id !== props.pageId ? ` hidden` : ' flex w-full flex-col pr-10'}`}>
+      {props.children}
+    </div>
+  )
 }
 
 function PageHeader(props: { children: React.ReactNode }) {
@@ -107,17 +84,11 @@ function PageOptions(props: { children: React.ReactNode }) {
 }
 
 function PageLabel() {
-  const context = useContext(TabSelectPagesControlContext)
-  const userName = useAppSelector(state => state.authReducer.user.username)
-  return (
-    <div className="text-3xl font-bold">
-      {context.currentTab?.label} {userName}
-    </div>
-  )
+  const { headerLabelSelected } = useAppSelector(store => store.baseLayoutReducer)
+  return <div className="text-3xl font-bold">{headerLabelSelected?.label}</div>
 }
 
 function PageSearch() {
-  const context = useContext(TabSelectPagesControlContext)
   return (
     <div className="flex w-96 h-12 bg-white p-2  px-4 rounded-lg items-center mt-4 ">
       <SearchIcon className="text-primary" />
@@ -150,62 +121,6 @@ function PageContent() {
         <TabPanel value="3">To go</TabPanel>
         <TabPanel value="4">Delivery</TabPanel>
       </TabContext>
-    </div>
-  )
-}
-
-function TabSelectPages(props: TabSelectPagesControlProps) {
-  const route = useRoute()
-  const context = useContext(TabSelectPagesControlContext)
-  return (
-    <div className="bg-white h-12 flex items-center">
-      <div className="flex">
-        <CustomizedMenus
-          variant="text"
-          className="pr-4"
-          menulabel="Store Name"
-          options={[
-            {
-              icon: <StorefrontIcon />,
-              label: 'Store Name',
-              onClick: () => {}
-            },
-            {
-              icon: <StorefrontIcon />,
-              label: 'Store Name',
-              isShowDividerBottom: true,
-              onClick: () => {}
-            },
-            {
-              icon: <AddIcon />,
-              label: 'Create Store',
-              onClick: () => {
-                route.to('/store', { tebIndex: 2 })
-              }
-            }
-          ]}
-        />
-      </div>
-      <div className="flex">
-        <Each
-          values={context.tablabels}
-          render={(label, index) => (
-            <React.Fragment>
-              <div
-                key={`TabSelectPages-${index}`}
-                onClick={() => context.setCurrentTab?.(index)}
-                className={`hover:bg-opacity-50 ${
-                  context.currentTab?.index === index
-                    ? 'bg-success text-white'
-                    : 'bg-white text-gray-400 hover:text-gray-600 hover:bg-gray-200'
-                } px-5 py-2 rounded-lg text-sm mr-2 cursor-pointer`}
-              >
-                {label}
-              </div>
-            </React.Fragment>
-          )}
-        />
-      </div>
     </div>
   )
 }

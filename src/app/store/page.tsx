@@ -1,17 +1,16 @@
 'use client'
-import HocGetEmployee from '@/components/employee/hocGetEmployee'
-import LeftMenuBar from '@/components/home/leftMenuBar'
-import StoreManagement from '@/components/store/storeManagement'
+import BaseLayoutCompomnent from '@/components/home/baseLayoutCompomnent'
+import StoreContent from '@/components/store/storeContent'
 
 export default function StorePage() {
   return (
-    <HocGetEmployee>
-      <main className="flex min-h-screen">
-        <div className="w-full flex bg-primary-light">
-          <LeftMenuBar />
-          <StoreManagement />
+    <BaseLayoutCompomnent>
+      <div className="flex w-full flex-col">
+        <div className="flex w-full justify-between">
+          <div className="text-3xl font-bold">Store Management</div>
         </div>
-      </main>
-    </HocGetEmployee>
+        <StoreContent />
+      </div>
+    </BaseLayoutCompomnent>
   )
 }

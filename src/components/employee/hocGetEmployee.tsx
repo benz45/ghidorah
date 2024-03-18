@@ -1,8 +1,5 @@
 'use client'
 
-import HomePage from '@/components/home/homePage'
-import LeftMenuBar from '@/components/home/leftMenuBar'
-import TableDetailOrder from '@/components/home/tableDetailOrder'
 import { ProductEmployeePageParams } from '@/hook/routeParams'
 import useRoute from '@/hook/router'
 import { setEmployee } from '@/redux/reducers/employee.reducer'

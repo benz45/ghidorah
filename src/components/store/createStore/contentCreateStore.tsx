@@ -6,7 +6,6 @@ import useRoute from '@/hook/router'
 import { useAppSelector } from '@/redux/store'
 import { useServiceStore } from '@/service/reno/useServiceStore'
 import { yupResolver } from '@hookform/resolvers/yup'
-import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import { Box, Grid } from '@mui/material'
 import FormControl from '@mui/material/FormControl'
 import React, { ChangeEvent, useState } from 'react'
@@ -106,7 +105,7 @@ export default function ContentCreateStore(props: ContentCreateStoreProps) {
       onSetValue: (t, e) => setValue(t, e.target.value),
       isError: !!errors.detail,
       errorMessage: errors.detail?.message,
-      rows: 4
+      rows: 3
     }),
     houseNumber: renderInput({
       registerType: 'houseNumber',
@@ -203,23 +202,21 @@ export default function ContentCreateStore(props: ContentCreateStoreProps) {
   }
   return (
     <div className="flex bg-white w-full justify-center rounded-lg">
-      <div className="block 3xl:w-1/2 xl:w-1/2 md:w-1/2 lg:w-1/2 sm:w-1/2 p-12">
+      <div className="block 3xl:w-1/2 xl:w-1/2 md:w-1/2 lg:w-1/2 sm:w-1/2 p-8">
         <div className="flex w-full">
           <FormControl onSubmit={handleSubmit(onSubmit)} className="flex w-full">
             {errorBox()}
             <Grid item xs={12}>
               <div className="flex flex-col items-center w-full h-full pb-8">
-                <div className="text-4xl text-primary font-semibold pr-4 ">Create Store</div>
-                <span className="text-lg pt-2 text-gray-400">
-                  Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                </span>
+                <div className="text-3xl text-primary font-semibold pr-4 ">Create Store</div>
+                <span className="text-lg text-gray-400">Lorem ipsum dolor sit, amet consectetur adipisicing elit.</span>
               </div>
             </Grid>
             <Box component="form" autoComplete="off" className="flex-grow w-full">
               <Grid container spacing={2}>
                 <Grid item xs={12}>
                   <div className="flex">
-                    <div className="flex flex-col items-center pb-6 pr-6">
+                    <div className="flex flex-col items-center pr-6">
                       <InputImageUpload />
                       <div className="pt-2 text-primary">Upload image</div>
                     </div>
