@@ -29,18 +29,14 @@ declare global {
 export function Each<ValueType, RenderType extends (element: ValueType, index: number) => React.JSX.Element>(props: {
   render: RenderType
   values: ValueType[] | undefined
-}){
+}) {
   if (!props.values) {
     return []
   }
   return Children.toArray(props.values?.map((_elem, index) => props.render(_elem, index)))
 }
 
-export function ToggleComponent (props: {
-  toggle: boolean,
-  begin: React.ReactNode,
-  then: React.ReactNode,
-}) {
+export function ToggleComponent(props: { toggle: boolean; begin: React.ReactNode; then: React.ReactNode }) {
   if (props.toggle) {
     return props.begin
   }
@@ -48,10 +44,12 @@ export function ToggleComponent (props: {
 }
 
 export const getSearchParams = <T>(paramName: keyof T) => {
-  const params: URLSearchParams = new URLSearchParams(window.location.search)
-  const value = params.get(paramName as string)
-  if (value) {
-    return convertStringToShouldType(value) as T[typeof paramName]
+  if (typeof window !== 'undefined') {
+    const params: URLSearchParams = new URLSearchParams(window.location.search)
+    const value = params.get(paramName as string)
+    if (value) {
+      return convertStringToShouldType(value) as T[typeof paramName]
+    }
   }
 }
 

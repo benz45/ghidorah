@@ -1,4 +1,3 @@
-import { SigninResponse } from "@/model/auth/signinResponse"
 import { EmployeeResponse } from "@/model/employee/employeeResponse"
 import { PayloadAction, createSlice } from "@reduxjs/toolkit"
 
@@ -8,6 +7,7 @@ interface IState {
 const initialState: IState = {
   employee: undefined
 }
+
 const employee = createSlice({
   name: 'employee',
   initialState,

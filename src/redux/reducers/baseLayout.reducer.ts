@@ -1,5 +1,3 @@
-import { BaseLayoutParams } from '@/hook/routeParams'
-import { getSearchParams } from '@/util/util'
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
 interface HeaderLabelSelector {
@@ -25,11 +23,9 @@ const initialState: IState = {
 }
 
 const getInitState = (): IState => {
-  const tebIndex = getSearchParams<BaseLayoutParams>('tebIndex')
-  const isHaveSelector = tebIndex !== undefined && valueHeaderLabelSelector[tebIndex] !== undefined
   return {
     ...initialState,
-    headerLabelSelected: isHaveSelector ? valueHeaderLabelSelector[tebIndex] : initialState.valueHeaderLabelSelector[0]
+    headerLabelSelected: initialState.valueHeaderLabelSelector[0]
   }
 }
 

@@ -15,18 +15,18 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <ReduxProvider>
-      <CsrfComponent>
-        <html lang="en">
-          <Theme>
-            <body className={`${sansita_swashed.variable} ${montserrat.className}`}>
+    <CsrfComponent>
+      <html lang="en">
+        <Theme>
+          <body className={`${sansita_swashed.variable} ${montserrat.className}`}>
+            <ReduxProvider>
               <Interceptors>
                 <AppRouterCacheProvider>{children}</AppRouterCacheProvider>
               </Interceptors>
-            </body>
-          </Theme>
-        </html>
-      </CsrfComponent>
-    </ReduxProvider>
+            </ReduxProvider>
+          </body>
+        </Theme>
+      </html>
+    </CsrfComponent>
   )
 }
