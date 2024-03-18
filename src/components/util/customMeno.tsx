@@ -7,6 +7,27 @@ import MenuItem from '@mui/material/MenuItem'
 import { alpha, styled } from '@mui/material/styles'
 import React from 'react'
 
+const CustomButton = styled(Button)({
+  boxShadow: 'none',
+  textTransform: 'none',
+  fontSize: 16,
+  padding: '6px 12px',
+  lineHeight: 1.5,
+  fontWeight: 500,
+  fontFamily: [
+    '-apple-system',
+    'BlinkMacSystemFont',
+    '"Segoe UI"',
+    'Roboto',
+    '"Helvetica Neue"',
+    'Arial',
+    'sans-serif',
+    '"Apple Color Emoji"',
+    '"Segoe UI Emoji"',
+    '"Segoe UI Symbol"'
+  ].join(',')
+})
+
 const StyledMenu = styled((props: MenuProps) => (
   <Menu
     elevation={0}
@@ -65,7 +86,7 @@ export default function CustomizedMenus(props: CustomizedMenusProps) {
 
   return (
     <div className={`${props.className}`}>
-      <Button
+      <CustomButton
         id={props.id ?? ''}
         aria-controls={open ? 'customized-menu' : undefined}
         aria-haspopup="true"
@@ -76,7 +97,7 @@ export default function CustomizedMenus(props: CustomizedMenusProps) {
         endIcon={<KeyboardArrowDownIcon />}
       >
         {props.menulabel}
-      </Button>
+      </CustomButton>
       <StyledMenu
         id="customized-menu"
         MenuListProps={{

@@ -9,3 +9,8 @@ export interface ProductCustomerPageParams {
 export interface ProductEmployeePageParams {
   userId: number
 }
+
+export interface BaseLayoutParams {
+  tebIndex: number
+  userId: number
+}

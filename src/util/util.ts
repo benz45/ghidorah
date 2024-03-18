@@ -47,6 +47,14 @@ export function ToggleComponent (props: {
   return props.then
 }
 
+export const getSearchParams = <T>(paramName: keyof T) => {
+  const params: URLSearchParams = new URLSearchParams(window.location.search)
+  const value = params.get(paramName as string)
+  if (value) {
+    return convertStringToShouldType(value) as T[typeof paramName]
+  }
+}
+
 /**
  * e.g. @return key=value&key=value
  */
