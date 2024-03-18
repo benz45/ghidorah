@@ -13,6 +13,7 @@ import { useServiceStore } from '@/service/reno/useServiceStore'
 import { Each, ToggleComponent } from '@/util/util'
 import { TabContext, TabPanel } from '@mui/lab'
 import { Box, Grid, Tab, Tabs, styled } from '@mui/material'
+import { borderBottom } from '@mui/system'
 import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 
@@ -20,9 +21,8 @@ const AntTabs = styled(Tabs)({
   borderColor: '#F7F8FD',
   '& .MuiTabs-indicator': {
     borderBottom: '4px solid #5770FD',
-    borderRadius: 100,
-    'border-bottom-right-radius': '10px',
-    'border-bottom-left-radius': '10px'
+    borderTopRightRadius: 100,
+    borderTopLeftRadius: 100
   }
 })
 
