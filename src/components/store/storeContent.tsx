@@ -7,7 +7,7 @@ import CustomButton from '@/components/util/customButton'
 import { RendomComponent } from '@/components/util/rendomComponent'
 import { StorePageParams } from '@/hook/routeParams'
 import useRoute from '@/hook/router'
-import { setStoreEmployeePage } from '@/redux/reducers/store.reducer'
+import { setSelectStore, setStoreEmployeePage } from '@/redux/reducers/store.reducer'
 import { AppDispatch, useAppSelector } from '@/redux/store'
 import { useServiceStore } from '@/service/reno/useServiceStore'
 import { Each, ToggleComponent } from '@/util/util'
@@ -64,11 +64,14 @@ export default function StoreContent() {
   const employeeId = useAppSelector(store => store.employeeReducer.employee?.id)
   const route = useRoute<StorePageParams>()
   const [value, setValue] = React.useState<string>(`${route.get('tebIndex') ?? 1}`)
+
   const dispatch = useDispatch<AppDispatch>()
+
   const handleChange = (_event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue)
   }
-  const storeEmployeePage = useAppSelector(store => store.storeReducer.storeEmployee.pages)
+  const { selected, pages } = useAppSelector(store => store.storeReducer.storeEmployee)
+
   useEffect(() => {
     const _getStoreEmployeePage = async () => {
       const response = await getStoreEmployeePage.trigger({ employeeId })
@@ -97,7 +100,7 @@ export default function StoreContent() {
             </div>
           </div>
           <ToggleComponent
-            toggle={getStoreEmployeePage.isLoading}
+            toggle={!getStoreEmployeePage.isLoading}
             begin={
               <React.Fragment>
                 <Grid container rowSpacing={3} columnSpacing={3}>
@@ -116,11 +119,16 @@ export default function StoreContent() {
               <React.Fragment>
                 <Grid container rowSpacing={3} columnSpacing={3}>
                   <Each
-                    values={storeEmployeePage?.entities}
+                    values={pages?.entities}
                     render={(elem, index) => {
                       return (
                         <Grid item xs={6} md={4} lg={3} xl={2}>
-                          <StoreDetailBox key={`StoreItem${index}`} store={elem} />
+                          <StoreDetailBox
+                            key={`StoreItem${index}`}
+                            store={elem}
+                            isSelected={elem.id === selected?.id}
+                            onClick={() => dispatch(setSelectStore(elem))}
+                          />
                         </Grid>
                       )
                     }}
