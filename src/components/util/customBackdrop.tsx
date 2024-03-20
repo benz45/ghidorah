@@ -13,7 +13,7 @@ interface BackdropComponentRefFuntion {
 
 const initState: InitCustomBackdropState = {}
 
-const ContextCustomBackdrop = React.createContext<InitCustomBackdropState>(initState)
+export const ContextCustomBackdrop = React.createContext<InitCustomBackdropState>(initState)
 
 export default function CustomBackdrop(props: { children: React.ReactNode }) {
   const openRef = React.useRef<BackdropComponentRefFuntion>(null)

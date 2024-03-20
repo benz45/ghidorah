@@ -3,10 +3,12 @@ import SearchInput from '@/components/searchInput'
 import ContentCreateStore from '@/components/store/createStore/contentCreateStore'
 import StoreDetailBox from '@/components/store/storePage/storeDetailBox'
 import StoreItemLoading from '@/components/store/storePage/storeItemLoading'
+import { ContextCustomBackdrop } from '@/components/util/customBackdrop'
 import CustomButton from '@/components/util/customButton'
 import { RendomComponent } from '@/components/util/rendomComponent'
 import { StorePageParams } from '@/hook/routeParams'
 import useRoute from '@/hook/router'
+import { StoreEmployeePageResponse } from '@/model/store/storeEmployeePageResponse'
 import { setSelectStore, setStoreEmployeePage } from '@/redux/reducers/store.reducer'
 import { AppDispatch, useAppSelector } from '@/redux/store'
 import { useServiceStore } from '@/service/reno/useServiceStore'
@@ -16,7 +18,7 @@ import { Box, Grid, Tab, Tabs, styled } from '@mui/material'
 import { borderBottom } from '@mui/system'
 import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-
+import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 const AntTabs = styled(Tabs)({
   borderColor: '#F7F8FD',
   '& .MuiTabs-indicator': {
@@ -60,6 +62,7 @@ const AntTab = styled((props: StyledTabProps) => <Tab disableRipple {...props} /
 }))
 
 export default function StoreContent() {
+  const contextCustomBackdrop = React.useContext(ContextCustomBackdrop)
   const { getStoreEmployeePage } = useServiceStore()
   const employeeId = useAppSelector(store => store.employeeReducer.employee?.id)
   const route = useRoute<StorePageParams>()
@@ -81,6 +84,27 @@ export default function StoreContent() {
       _getStoreEmployeePage()
     }
   }, [employeeId])
+
+  const generateContentStoreSelectedBBackDrop = (storeName: string) => {
+    return (
+      <div className="flex flex-col w-full">
+        <div className="flex w-full pb-2 justify-center items-center">
+          <div className="text-xl font-semibold pr-2">Selected Store</div>
+          <CheckCircleIcon color="success" style={{ fontSize: 24 }} />
+        </div>
+        <div className="flex w-full justify-center pb-6">
+          <div className="text-primary font-lg font-bold">{storeName}</div>
+        </div>
+        <CustomButton text="Back" onClick={() => contextCustomBackdrop.setOpen?.(false)} />
+      </div>
+    )
+  }
+
+  const shouldSetSelectStore = (event: StoreEmployeePageResponse) => {
+    dispatch(setSelectStore(event))
+    contextCustomBackdrop.setContent?.(generateContentStoreSelectedBBackDrop(event.name))
+    contextCustomBackdrop.setOpen?.(true)
+  }
 
   return (
     <div className="mt-4">
@@ -127,7 +151,7 @@ export default function StoreContent() {
                             key={`StoreItem${index}`}
                             store={elem}
                             isSelected={elem.id === selected?.id}
-                            onClick={() => dispatch(setSelectStore(elem))}
+                            onClick={() => shouldSetSelectStore(elem)}
                           />
                         </Grid>
                       )
