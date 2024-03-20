@@ -37,7 +37,7 @@ export function Each<ValueType, RenderType extends (element: ValueType, index: n
 }
 
 export function ToggleComponent(props: { toggle: boolean; begin: React.ReactNode; then: React.ReactNode }) {
-  if (props.toggle) {
+  if (!props.toggle) {
     return props.begin
   }
   return props.then

@@ -1,8 +1,17 @@
 import { StoreEmployeePageResponse } from '@/model/store/storeEmployeePageResponse'
-import EditIcon from '@mui/icons-material/Edit'
+import { ToggleComponent } from '@/util/util'
+import CheckCircleIcon from '@mui/icons-material/CheckCircle'
+import Edit from '@mui/icons-material/Edit'
 import VisibilityIcon from '@mui/icons-material/Visibility'
-
-export default function StoreDetailBox({ store }: { store: StoreEmployeePageResponse }) {
+export default function StoreDetailBox({
+  store,
+  isSelected,
+  onClick
+}: {
+  store: StoreEmployeePageResponse
+  isSelected: boolean
+  onClick: () => void
+}) {
   return (
     <div className="bg-white rounded-lg ">
       <div className="flex flex-col p-6">
@@ -15,8 +24,20 @@ export default function StoreDetailBox({ store }: { store: StoreEmployeePageResp
         </div>
         <div className="flex mt-4 justify-between">
           <div className="flex">
-            <div className="px-8 py-1 text-xs text-center bg-primary text-white rounded-lg flex justify-center items-center mr-2">
-              <div>Select</div>
+            <div
+              className="px-8 py-1 text-xs text-center bg-primary text-white rounded-lg flex justify-center items-center mr-2 cursor-pointer"
+              onClick={() => onClick()}
+            >
+              <ToggleComponent
+                toggle={isSelected}
+                begin={<div className="pr-2">Select</div>}
+                then={
+                  <>
+                    <div className="pr-2">Selected</div>
+                    <CheckCircleIcon style={{ fontSize: 16 }} />
+                  </>
+                }
+              />
             </div>
           </div>
           <div className="flex">
@@ -24,7 +45,7 @@ export default function StoreDetailBox({ store }: { store: StoreEmployeePageResp
               <VisibilityIcon />
             </div>
             <div className="py-1 px-1 rounded-lg bg-gray-100 text-gray-400 ml-2">
-              <EditIcon />
+              <Edit />
             </div>
           </div>
         </div>
