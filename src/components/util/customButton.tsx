@@ -5,6 +5,7 @@ export default function CustomButton(props: {
   className?: string
   onClick?: () => void
   size?: 'sm' | 'lg' | 'xl'
+  loading?: boolean
 }) {
   let className =
     'rounded-lg p-4 font-semibold focus:ring-offset-2 focus:ring-2 min-w-32 transition duration-300 ease-in-out'
@@ -19,7 +20,7 @@ export default function CustomButton(props: {
       className={`${className} ${props.className}`}
       onClick={() => props.onClick?.()}
     >
-      {props.text}
+      {props.loading ? 'Loading...' : props.text}
     </button>
     // <Stack spacing={2} direction="row">
     // </Stack>
