@@ -13,7 +13,7 @@ interface ICustomSelect<Value> {
     mapToValue: (argsOption: Value) => AllowedValue | undefined
     mapToLabel: (argsOption: Value) => AllowedLabel | undefined
     valueOptions: readonly Value[] | undefined
-    onSelectChanged?: (argsNewValue: string | NonNullable<Value>) => void
+    onSelectChanged?: (argsNewValue: NonNullable<Value>) => void
     isError: boolean
   }
 }
@@ -55,7 +55,7 @@ export default function CustomSelect<Value>(props: ICustomSelect<Value>) {
   }
 
   const handleChange = (e: SelectChangeEvent<NonNullable<Value>>) => {
-    const value = e.target.value
+    const value = e.target.value as NonNullable<Value>
     props.control.onSelectChanged?.(value)
     setOnFocus(false)
   }
