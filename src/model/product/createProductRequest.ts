@@ -2,11 +2,11 @@ import { BaseType, BaseTypeIdOnly } from "@/model/baseType";
 
 export interface CreateProductRequest {
   amount:        number;
-  detail:        string;
-  isActive:      boolean;
+  detail?:        string;
+  isActive?:      boolean;
   name:          string;
   price:         number;
-  productImages: ProductImage[];
+  productImages?: ProductImage[];
   productStatus: BaseTypeIdOnly | BaseType;
   productTypes:  BaseTypeIdOnly[] | BaseType[];
   storeId:       number;
