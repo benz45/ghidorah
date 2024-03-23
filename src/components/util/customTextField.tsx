@@ -9,7 +9,7 @@ const CustomTextFieldForwardRef = (props: TextFieldProps, ref: React.ForwardedRe
         ref={ref}
         variant="outlined"
         value={props.value ?? ''}
-        className={`${props.className} w-full  border-none border-0`}
+        className={`${props.className} w-full  border-none border-0 text-black`}
       />
     </>
   )
@@ -25,9 +25,9 @@ const CssTextField = styled(CustomTextField)({
     borderBottomColor: '#B2BAC2'
   },
   '& .MuiOutlinedInput-root': {
+    backgroundColor: '#F3F7FF',
     '& fieldset': {
-      borderColor: '#eaebff',
-      backgroundColor: '#F3F7FF'
+      borderColor: '#eaebff'
     },
     '&:hover fieldset': {
       borderColor: '#c9cdfe'
