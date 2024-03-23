@@ -69,3 +69,7 @@ export const convertToRequestParams = <T>(params: T): string => {
   }
   return _params
 }
+
+export function getFormattedDate(date: Date) {
+  return new Date(date).toLocaleDateString('en-ca')
+}
