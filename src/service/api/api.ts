@@ -18,10 +18,11 @@ import { StoreEmployeePageResponse } from "@/model/store/storeEmployeePageRespon
 import { StoreEmployeePageParams } from "@/model/store/storeEmployeePageParams"
 import { CreateProductRequest } from "@/model/product/createProductRequest"
 import { CreateProductResponse } from "@/model/product/createProductResponse"
+import { ProductPageResponseParams } from "@/model/product/productPageResponseParams"
 
 export interface ApiGetPath {
   'api/csrf-token': [CSRFResponse],
-  'api/e-commerce-info/product': [ProductPageResponse],
+  'api/e-commerce-info/product': [ProductPageResponse, {}, ProductPageResponseParams],
   'api/e-commerce-info/product-type': [BaseType[]],
   'api/e-commerce-info/product-status': [BaseType[]],
   'api/e-commerce-info/store/employee': [PageResponse<StoreEmployeePageResponse>, {}, StoreEmployeePageParams],

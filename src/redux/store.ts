@@ -6,6 +6,7 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import { TypedUseSelectorHook, useSelector } from 'react-redux'
 import storage from 'redux-persist/lib/storage'
 import { persistStore, persistReducer, FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE } from 'redux-persist'
+import productReducer from '@/redux/reducers/product.reducer'
 
 const persistConfig = {
   key: 'root',
@@ -17,6 +18,7 @@ const persistConfig = {
 const rootCombineReducers = combineReducers({
   authReducer,
   employeeReducer,
+  productReducer,
   storeReducer,
   baseLayoutReducer
 })

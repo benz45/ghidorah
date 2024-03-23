@@ -5,6 +5,6 @@ export interface ProductResponse {
   statusId: number
   updatedAt: Date
   createdAt: Date
-  imageId?: number
-  productImageKey?: string
+  imageId: number
+  productImageKey: string
 }

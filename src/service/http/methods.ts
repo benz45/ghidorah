@@ -48,11 +48,11 @@ export function useGetMethod<T extends keyof ApiGetPath>(url: T) {
       const response = await axios.get<ApiGetResponse<typeof url>>(key)
       return response.data
     },
-    {
-      isPaused() {
-        return true
-      }
-    }
+    // {
+    //   isPaused() {
+    //     return true
+    //   }
+    // }
   )
 
   return {

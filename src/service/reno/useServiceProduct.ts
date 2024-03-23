@@ -1,10 +1,16 @@
-import { useGetTriggerMethod } from '@/service/http/methods'
+import { useGetMethod, useGetTriggerMethod, useGetTriggerWithParamsMethod, usePostMethod } from '@/service/http/methods'
 
 export function useServiceProduct() {
 
-  const getProduct = useGetTriggerMethod("api/e-commerce-info/product")
+  const postProduct = usePostMethod("api/e-commerce-info/product")
+  const getProduct = useGetTriggerWithParamsMethod("api/e-commerce-info/product")
+  const getAllProductType = useGetMethod("api/e-commerce-info/product-type")
+  const getAllProductStatus = useGetMethod("api/e-commerce-info/product-status")
   
   return {
-    getProduct
+    postProduct,
+    getProduct,
+    getAllProductType,
+    getAllProductStatus
   }
 }
