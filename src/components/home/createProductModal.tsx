@@ -1,18 +1,19 @@
 'use client'
 import CustomButton from '@/components/util/customButton'
 import CustomTextField from '@/components/util/customTextField'
-import { ApiException } from '@/model/exception/apiException'
+import { ApiException } from '@/model/exception/renoApiException'
 import { CreateProductRequest } from '@/model/product/createProductRequest'
-import { useAppSelector } from '@/redux/store'
+import { setProductPage } from '@/redux/reducers/product.reducer'
+import { AppDispatch, useAppSelector } from '@/redux/store'
 import { useServiceProduct } from '@/service/reno/useServiceProduct'
 import { Dialog, Transition } from '@headlessui/react'
 import { yupResolver } from '@hookform/resolvers/yup'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import { Box, Grid, MenuItem } from '@mui/material'
 import FormControl from '@mui/material/FormControl'
-import { AxiosError } from 'axios'
 import React, { Fragment, useRef, useState } from 'react'
 import { SubmitHandler, useForm, useWatch } from 'react-hook-form'
+import { useDispatch } from 'react-redux'
 import * as yup from 'yup'
 
 const schema = yup.object({
@@ -38,7 +39,8 @@ interface CreateProductModalContext {
 export const CreateProductModalContext = React.createContext<CreateProductModalContext>({})
 
 export default function CreateProductModal(props: { children: React.ReactNode }) {
-  const { postProduct } = useServiceProduct()
+  const { postProduct, getProduct } = useServiceProduct()
+  const dispatch = useDispatch<AppDispatch>()
   const { getAllProductStatus, getAllProductType } = useServiceProduct()
   const [errorMessage, setErrorMessage] = useState<string | undefined>()
   const [isCreateSuccess, setIsCreateSuccess] = useState<boolean>(false)
@@ -109,21 +111,19 @@ export default function CreateProductModal(props: { children: React.ReactNode })
 
   function renderDetailInput() {
     return (
-      <>
-        <CustomTextField
-          {...register('detail')}
-          id="detail"
-          label="Description (Optional)"
-          placeholder="Please enter product description"
-          type="text"
-          value={values.detail ?? ''}
-          onChange={e => setValue('detail', e.target.value)}
-          error={!!errors.detail}
-          rows={4}
-          multiline
-          helperText={errors.detail?.message}
-        />
-      </>
+      <CustomTextField
+        {...register('detail')}
+        id="detail"
+        label="Description (Optional)"
+        placeholder="Please enter product description"
+        type="text"
+        value={values.detail ?? ''}
+        onChange={e => setValue('detail', e.target.value)}
+        error={!!errors.detail}
+        rows={4}
+        multiline
+        helperText={errors.detail?.message}
+      />
     )
   }
 
@@ -176,10 +176,10 @@ export default function CreateProductModal(props: { children: React.ReactNode })
   }
 
   const onSubmit: SubmitHandler<CreateUserSchema> = async data => {
+    if (!storeSelected?.id) {
+      throw new Error('Store is not selected')
+    }
     try {
-      if (!storeSelected?.id) {
-        throw new Error('Store is not selected')
-      }
       const request: CreateProductRequest = {
         name: data.name,
         amount: data.amount,
@@ -196,20 +196,12 @@ export default function CreateProductModal(props: { children: React.ReactNode })
         storeId: storeSelected?.id
       }
       await postProduct.trigger(request)
+      const productPageResponse = await getProduct.trigger({ storeId: storeSelected.id })
+      dispatch(setProductPage(productPageResponse))
       setIsCreateSuccess(true)
     } catch (error) {
-      debugger
-
-      if (typeof error === 'string') {
-        setErrorMessage(error as string)
-      } else if (error instanceof Error) {
-        setErrorMessage(error.message)
-      } else if (error instanceof ApiException) {
-        debugger
-        // const _error = error as AxiosError<BadRequest>
-        // _error.response?.data[0].errorMessage
-      }
-      console.error(error)
+      const { errorMessage } = new ApiException(error)
+      setErrorMessage(errorMessage)
     }
   }
 
